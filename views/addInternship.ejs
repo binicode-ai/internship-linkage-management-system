@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Internship — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div><h1>Post Internship</h1><p>Create a new internship opportunity</p></div>
+  <a href="/internships" class="btn btn-ghost">← Back</a>
+</div>
+
+<div class="form-card">
+  <div class="form-card-header"><h2>Internship Details</h2></div>
+  <div class="form-card-body">
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-error">⚠️ <%= error %></div>
+    <% } %>
+    <form action="/internships/add" method="POST">
+      <div class="form-group">
+        <label>Company</label>
+        <select name="company_id" required>
+          <option value="">— Select Company —</option>
+          <% companies.forEach(c => { %>
+            <option value="<%= c.company_id %>"
+              <%= (typeof company_id !== 'undefined' && company_id == c.company_id) ? 'selected' : '' %>>
+              <%= c.company_name %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Title</label>
+        <input name="title" placeholder="e.g. Software Engineering Intern" required
+          value="<%= typeof title !== 'undefined' ? title : '' %>">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea name="description" placeholder="Describe the internship role..."><%= typeof description !== 'undefined' ? description : '' %></textarea>
+      </div>
+      <div class="form-group">
+        <label>Duration (months)</label>
+        <input name="duration_months" type="number" min="1" placeholder="e.g. 3" required
+          value="<%= typeof duration_months !== 'undefined' ? duration_months : '' %>">
+      </div>
+      <div class="form-group">
+        <label>Start Date</label>
+        <input name="start_date" type="date" required
+          value="<%= typeof start_date !== 'undefined' ? start_date : '' %>">
+      </div>
+      <div class="form-group">
+        <label>Stipend (ETB)</label>
+        <input name="stipend" type="number" min="0" step="0.01" placeholder="e.g. 2000.00"
+          value="<%= typeof stipend !== 'undefined' ? stipend : '' %>">
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Post Internship</button>
+        <a href="/internships" class="btn btn-ghost">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

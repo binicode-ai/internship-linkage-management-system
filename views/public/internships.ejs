@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Internships — InternLink</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #fff; color: #111827; }
+.page-hero { background: linear-gradient(135deg,#1e3a8a,#1d4ed8); padding: 48px 60px; }
+.page-hero h1 { font-size: 1.9rem; font-weight: 800; color: #fff; margin-bottom: 6px; }
+.page-hero p { color: rgba(255,255,255,0.7); }
+.content { max-width: 1100px; margin: 0 auto; padding: 40px; }
+/* Filter bar */
+.filter-bar { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px 24px; margin-bottom: 32px; display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+.filter-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 150px; }
+.filter-group label { font-size: 0.72rem; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; }
+.filter-group input, .filter-group select { padding: 9px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.875rem; color: #111827; background: #fff; font-family: inherit; }
+.filter-group input:focus, .filter-group select:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+.btn-filter { background: #2563eb; color: #fff; padding: 9px 20px; border: none; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; font-family: inherit; white-space: nowrap; }
+.btn-filter:hover { background: #1d4ed8; }
+.btn-clear { background: #f3f4f6; color: #374151; padding: 9px 16px; border: none; border-radius: 8px; font-size: 0.875rem; font-weight: 500; cursor: pointer; font-family: inherit; text-decoration: none; display: inline-flex; align-items: center; }
+.btn-clear:hover { background: #e5e7eb; }
+/* Grid */
+.intern-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 24px; }
+.intern-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 24px; transition: box-shadow 0.2s, transform 0.2s; display: flex; flex-direction: column; }
+.intern-card:hover { box-shadow: 0 8px 32px rgba(37,99,235,0.1); transform: translateY(-3px); }
+.intern-card h3 { font-size: 1rem; font-weight: 700; color: #111827; margin-bottom: 4px; }
+.intern-card .co { color: #2563eb; font-size: 0.83rem; font-weight: 600; margin-bottom: 12px; }
+.intern-card .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.intern-card .tag { font-size: 0.73rem; color: #6b7280; background: #f3f4f6; padding: 3px 8px; border-radius: 5px; }
+.intern-card .actions { margin-top: auto; display: flex; gap: 8px; }
+.badge-open { background: #dbeafe; color: #1e40af; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; display: inline-block; margin-bottom: 12px; }
+.badge-filled { background: #ede9fe; color: #5b21b6; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; display: inline-block; margin-bottom: 12px; }
+.btn-primary-sm { background: #2563eb; color: #fff; padding: 8px 18px; border-radius: 7px; font-size: 0.83rem; font-weight: 600; text-decoration: none; }
+.btn-primary-sm:hover { background: #1d4ed8; }
+.btn-ghost-sm { background: #f3f4f6; color: #374151; padding: 8px 18px; border-radius: 7px; font-size: 0.83rem; font-weight: 600; text-decoration: none; }
+.btn-ghost-sm:hover { background: #e5e7eb; }
+.empty { text-align: center; padding: 60px; color: #9ca3af; }
+.empty .ei { font-size: 3rem; margin-bottom: 12px; }
+@media (max-width: 768px) { .page-hero { padding: 40px 20px; } .content { padding: 24px 20px; } }
+</style>
+</head>
+<body>
+<%- include('partials/nav') %>
+
+<div class="page-hero">
+  <h1>💼 Browse Internships</h1>
+  <p><%= internships.length %> opportunities available across Ethiopia</p>
+</div>
+
+<div class="content">
+  <form action="/public/internships" method="GET" class="filter-bar">
+    <div class="filter-group" style="flex:2">
+      <label>Search</label>
+      <input type="text" name="q" value="<%= q %>" placeholder="Title or company...">
+    </div>
+    <div class="filter-group">
+      <label>Location</label>
+      <input type="text" name="location" value="<%= location %>" placeholder="e.g. Addis Ababa">
+    </div>
+    <div class="filter-group">
+      <label>Industry</label>
+      <input type="text" name="industry" value="<%= industry %>" placeholder="e.g. Technology">
+    </div>
+    <div class="filter-group" style="min-width:120px">
+      <label>Stipend</label>
+      <select name="paid">
+        <option value="" <%= paid===''?'selected':'' %>>All</option>
+        <option value="paid" <%= paid==='paid'?'selected':'' %>>Paid Only</option>
+        <option value="unpaid" <%= paid==='unpaid'?'selected':'' %>>Unpaid Only</option>
+      </select>
+    </div>
+    <button type="submit" class="btn-filter">Search</button>
+    <a href="/public/internships" class="btn-clear">Clear</a>
+  </form>
+
+  <% if (internships.length === 0) { %>
+    <div class="empty"><div class="ei">💼</div><p>No internships found. Try adjusting your filters.</p></div>
+  <% } else { %>
+  <div class="intern-grid">
+    <% internships.forEach(i => { %>
+    <div class="intern-card">
+      <h3><%= i.title %></h3>
+      <div class="co">🏢 <%= i.company_name %></div>
+      <div class="tags">
+        <span class="tag">📍 <%= i.company_location %></span>
+        <span class="tag">🏭 <%= i.industry_type %></span>
+        <span class="tag">⏱ <%= i.duration_months %> months</span>
+        <% if (i.stipend) { %><span class="tag">💰 ETB <%= Number(i.stipend).toLocaleString() %></span><% } %>
+      </div>
+      <span class="badge-<%= i.status.toLowerCase() %>"><%= i.status %></span>
+      <div class="actions">
+        <a href="/public/internships/<%= i.internship_id %>" class="btn-primary-sm">View Details</a>
+        <a href="/portal/apply" class="btn-ghost-sm">Apply</a>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

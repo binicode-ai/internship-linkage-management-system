@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Company — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div><h1>Add Company</h1><p>Register a new industry partner</p></div>
+  <a href="/companies" class="btn btn-ghost">← Back</a>
+</div>
+
+<div class="form-card">
+  <div class="form-card-header"><h2>Company Details</h2></div>
+  <div class="form-card-body">
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-error">⚠️ <%= error %></div>
+    <% } %>
+    <form action="/companies/add" method="POST">
+      <div class="form-group">
+        <label>Company Name</label>
+        <input name="company_name" placeholder="e.g. Ethio Telecom" required
+          value="<%= typeof company_name !== 'undefined' ? company_name : '' %>">
+      </div>
+      <div class="form-group">
+        <label>Industry Type</label>
+        <input name="industry_type" placeholder="e.g. Telecommunications"
+          value="<%= typeof industry_type !== 'undefined' ? industry_type : '' %>" required>
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <input name="location" placeholder="e.g. Addis Ababa"
+          value="<%= typeof location !== 'undefined' ? location : '' %>" required>
+      </div>
+      <div class="form-group">
+        <label>Contact Email</label>
+        <input name="contact_email" type="email" placeholder="hr@company.com"
+          value="<%= typeof contact_email !== 'undefined' ? contact_email : '' %>" required>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input name="phone_number" placeholder="+251 9XX XXX XXX"
+          value="<%= typeof phone_number !== 'undefined' ? phone_number : '' %>" required>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Add Company</button>
+        <a href="/companies" class="btn btn-ghost">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

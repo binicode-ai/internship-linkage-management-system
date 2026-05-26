@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title><%= internship.title %> — InternLink</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f9fafb; color: #111827; }
+.page-hero { background: linear-gradient(135deg,#1e3a8a,#1d4ed8); padding: 48px 60px; }
+.page-hero .back { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.875rem; display: inline-block; margin-bottom: 16px; }
+.page-hero .back:hover { color: #fff; }
+.page-hero h1 { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+.page-hero .sub { color: rgba(255,255,255,0.75); font-size: 1rem; }
+.content { max-width: 900px; margin: 0 auto; padding: 40px; }
+.detail-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 32px; margin-bottom: 24px; }
+.meta-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 16px; margin-bottom: 28px; }
+.meta-item { background: #f9fafb; border-radius: 10px; padding: 14px 16px; }
+.meta-item .lbl { font-size: 0.7rem; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.meta-item .val { font-size: 0.95rem; font-weight: 600; color: #111827; }
+.desc-title { font-size: 1rem; font-weight: 700; color: #111827; margin-bottom: 10px; }
+.desc-text { font-size: 0.9rem; color: #374151; line-height: 1.8; margin-bottom: 24px; }
+.company-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 20px; margin-bottom: 24px; }
+.company-box h3 { font-size: 0.875rem; font-weight: 700; color: #1e40af; margin-bottom: 12px; }
+.company-box p { font-size: 0.85rem; color: #374151; margin-bottom: 4px; }
+.apply-section { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.btn-apply { background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-size: 0.95rem; font-weight: 700; text-decoration: none; }
+.btn-apply:hover { background: #1d4ed8; }
+.btn-back { background: #f3f4f6; color: #374151; padding: 12px 20px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; text-decoration: none; }
+.btn-back:hover { background: #e5e7eb; }
+.note { font-size: 0.8rem; color: #9ca3af; margin-top: 8px; }
+@media (max-width: 768px) { .page-hero { padding: 40px 20px; } .content { padding: 24px 20px; } }
+</style>
+</head>
+<body>
+<%- include('partials/nav') %>
+
+<div class="page-hero">
+  <a href="/public/internships" class="back">← Back to Internships</a>
+  <h1><%= internship.title %></h1>
+  <div class="sub">🏢 <%= internship.company_name %> &nbsp;·&nbsp; 📍 <%= internship.company_location %></div>
+</div>
+
+<div class="content">
+  <div class="detail-card">
+    <div class="meta-grid">
+      <div class="meta-item"><div class="lbl">Industry</div><div class="val"><%= internship.industry_type %></div></div>
+      <div class="meta-item"><div class="lbl">Duration</div><div class="val"><%= internship.duration_months %> months</div></div>
+      <div class="meta-item"><div class="lbl">Start Date</div><div class="val"><%= internship.start_date ? new Date(internship.start_date).toISOString().slice(0,10) : 'TBD' %></div></div>
+      <div class="meta-item"><div class="lbl">Stipend</div><div class="val"><%= internship.stipend ? 'ETB ' + Number(internship.stipend).toLocaleString() : 'Unpaid' %></div></div>
+    </div>
+
+    <% if (internship.description) { %>
+    <div class="desc-title">About This Internship</div>
+    <div class="desc-text"><%= internship.description %></div>
+    <% } %>
+
+    <div class="company-box">
+      <h3>About the Company</h3>
+      <p><strong><%= internship.company_name %></strong></p>
+      <p>📍 <%= internship.company_location %></p>
+      <p>📧 <%= internship.contact_email %></p>
+      <p>📞 <%= internship.phone_number %></p>
+    </div>
+
+    <div class="apply-section">
+      <a href="/portal/apply" class="btn-apply">Apply Now</a>
+      <a href="/public/internships" class="btn-back">← Back</a>
+    </div>
+    <p class="note">You need a student account to apply. <a href="/portal/register?next=/portal/apply" style="color:#2563eb">Register here</a> or <a href="/portal/login?next=/portal/apply" style="color:#2563eb">login</a>.</p>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

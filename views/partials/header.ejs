@@ -1,0 +1,51 @@
+<!-- Mobile overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="adminSidebar">
+    <div class="sidebar-brand">
+      <div class="brand-name">🎓 InternLink</div>
+      <div class="brand-sub">Industry Linkage System</div>
+    </div>
+    <nav class="sidebar-nav" onclick="closeSidebarOnMobile()">
+      <div class="nav-section-label">Overview</div>
+      <a href="/"><span class="nav-icon">🏠</span> Dashboard</a>
+
+      <div class="nav-section-label">Management</div>
+      <a href="/universities"><span class="nav-icon">🏫</span> Universities</a>
+      <a href="/students"><span class="nav-icon">🎓</span> Students</a>
+      <a href="/companies"><span class="nav-icon">🏢</span> Companies</a>
+
+      <div class="nav-section-label">Internships</div>
+      <a href="/internships"><span class="nav-icon">💼</span> Internships</a>
+      <a href="/applications"><span class="nav-icon">📋</span> Applications</a>
+      <a href="/supervisors"><span class="nav-icon">👤</span> Supervisors</a>
+
+      <div class="nav-section-label">Reports</div>
+      <a href="/evaluations"><span class="nav-icon">⭐</span> Evaluations</a>
+      <a href="/complaints"><span class="nav-icon">💬</span> Complaints</a>
+
+      <div class="nav-section-label">Portals</div>
+      <a href="/public" target="_blank"><span class="nav-icon">🌐</span> Public Site</a>
+      <a href="/portal" target="_blank"><span class="nav-icon">🎓</span> Student Portal</a>
+    </nav>
+    <div class="sidebar-footer">
+      &copy; 2026 InternLink<br>Ethiopia
+    </div>
+  </aside>
+
+  <div class="main-wrap">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:8px">
+        <!-- Mobile hamburger (shown on small screens) -->
+        <button class="topbar-hamburger" id="mobileHamburger" onclick="openSidebar()" aria-label="Open menu">☰</button>
+        <!-- Desktop collapse toggle (hidden on mobile) -->
+        <button class="topbar-desktop-toggle" onclick="toggleDesktopSidebar()" style="background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:var(--muted);font-size:1.1rem;transition:background 0.2s" title="Toggle sidebar">☰</button>
+        <span class="topbar-title">Admin Dashboard</span>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-badge">Admin</span>
+        <a href="/admin/logout" style="font-size:0.8rem;color:var(--muted);margin-left:14px;text-decoration:none;">Sign Out</a>
+      </div>
+    </header>
+    <main class="page-content">

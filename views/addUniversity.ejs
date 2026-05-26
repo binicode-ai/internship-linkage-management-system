@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add University — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div><h1>Add University</h1><p>Register a new partner university</p></div>
+  <a href="/universities" class="btn btn-ghost">← Back</a>
+</div>
+
+<div class="form-card">
+  <div class="form-card-header"><h2>University Details</h2></div>
+  <div class="form-card-body">
+    <% if (error) { %>
+      <div class="alert alert-error">⚠️ <%= error %></div>
+    <% } %>
+    <form action="/universities/add" method="POST">
+      <div class="form-group">
+        <label>University Name</label>
+        <input name="university_name" placeholder="e.g. Addis Ababa University" required
+          value="<%= typeof university_name !== 'undefined' ? university_name : '' %>">
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <input name="location" placeholder="e.g. Addis Ababa"
+          value="<%= typeof location !== 'undefined' ? location : '' %>" required>
+      </div>
+      <div class="form-group">
+        <label>Contact Email</label>
+        <input name="contact_email" type="email" placeholder="contact@university.edu.et"
+          value="<%= typeof contact_email !== 'undefined' ? contact_email : '' %>" required>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Add University</button>
+        <a href="/universities" class="btn btn-ghost">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

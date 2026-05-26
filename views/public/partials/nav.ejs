@@ -1,0 +1,94 @@
+<style>
+* { box-sizing: border-box; }
+.pub-nav {
+  position: sticky; top: 0; z-index: 999;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0 60px;
+  height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.pub-nav .brand {
+  color: #111827; font-weight: 800; font-size: 1.15rem;
+  text-decoration: none; display: flex; align-items: center; gap: 10px;
+}
+.brand-logo {
+  width: 36px; height: 36px; border-radius: 9px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: #fff;
+}
+.nav-links {
+  display: flex; align-items: center; gap: 2px;
+  list-style: none; margin: 0; padding: 0;
+}
+.nav-links a {
+  color: #374151; text-decoration: none;
+  padding: 7px 14px; border-radius: 7px;
+  font-size: 0.9rem; font-weight: 500;
+  transition: color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+.nav-links a:hover { color: #2563eb; background: #eff6ff; }
+.nav-links .btn-login {
+  background: #2563eb; color: #fff !important;
+  border-radius: 8px; padding: 8px 20px;
+  font-weight: 600; margin-left: 8px;
+}
+.nav-links .btn-login:hover { background: #1d4ed8 !important; }
+/* Hamburger */
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 6px; border-radius: 7px;
+}
+.hamburger span { display: block; width: 20px; height: 2px; background: #374151; border-radius: 2px; }
+.mobile-menu {
+  display: none; background: #fff;
+  border-top: 1px solid #e5e7eb;
+  padding: 12px 20px 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.mobile-menu.open { display: block; }
+.mobile-menu a {
+  display: block; color: #374151; text-decoration: none;
+  padding: 10px 12px; border-radius: 7px;
+  font-size: 0.9rem; font-weight: 500; margin-bottom: 2px;
+}
+.mobile-menu a:hover { background: #eff6ff; color: #2563eb; }
+.mobile-menu .btn-login {
+  background: #2563eb; color: #fff !important;
+  text-align: center; margin-top: 8px;
+}
+@media (max-width: 768px) {
+  .pub-nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+}
+</style>
+
+<nav class="pub-nav">
+  <a href="/public" class="brand">
+    <div class="brand-logo">🎓</div>
+    InternLink
+  </a>
+  <ul class="nav-links">
+    <li><a href="/public">Home</a></li>
+    <li><a href="/internships-public">Internships</a></li>
+    <li><a href="/public/success-stories">Success Stories</a></li>
+    <li><a href="/public/about">About</a></li>
+    <li><a href="/public/contact">Contact</a></li>
+    <li><a href="/portal/login" class="btn-login">Login</a></li>
+  </ul>
+  <div class="hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/public">Home</a>
+  <a href="/internships-public">Internships</a>
+  <a href="/public/success-stories">Success Stories</a>
+  <a href="/public/about">About</a>
+  <a href="/public/contact">Contact</a>
+  <a href="/portal/login" class="btn-login">Login</a>
+</div>

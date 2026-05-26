@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body{margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4fa}
+    .pub-content{max-width:1000px;margin:0 auto;padding:48px 32px}
+    .page-banner{background:linear-gradient(135deg,#0f1f3d,#1e3a6e);color:#fff;padding:48px 40px;border-radius:12px;margin-bottom:36px;text-align:center}
+    .page-banner h1{font-size:1.9rem;font-weight:800;margin-bottom:8px}
+    .page-banner p{color:rgba(255,255,255,0.7)}
+    .resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px;margin-bottom:48px}
+    .resource-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:28px 24px;box-shadow:0 2px 8px rgba(0,0,0,0.06);text-align:center;transition:all 0.2s}
+    .resource-card:hover{box-shadow:0 8px 24px rgba(79,142,247,0.15);transform:translateY(-3px)}
+    .resource-icon{font-size:2.5rem;margin-bottom:14px}
+    .resource-card h3{font-size:1rem;font-weight:700;color:#0f1f3d;margin-bottom:8px}
+    .resource-card p{font-size:0.82rem;color:#64748b;line-height:1.6;margin-bottom:16px}
+    .section-title{font-size:1.3rem;font-weight:700;color:#0f1f3d;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid #e2e8f0}
+    .tip-list{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:28px;margin-bottom:32px}
+    .tip-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #f1f5f9}
+    .tip-item:last-child{border-bottom:none}
+    .tip-num{width:32px;height:32px;border-radius:50%;background:#dbeafe;color:#1e40af;font-weight:700;font-size:0.85rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .tip-item h4{font-size:0.9rem;font-weight:700;color:#0f1f3d;margin-bottom:4px}
+    .tip-item p{font-size:0.82rem;color:#64748b;line-height:1.5}
+  </style>
+</head>
+<body>
+<%- include('partials/nav') %>
+<div class="pub-content">
+  <div class="page-banner">
+    <h1>📚 Career Resources</h1>
+    <p>Everything you need to succeed in your internship journey</p>
+  </div>
+
+  <div id="cv" class="section-title">📄 CV Templates & Guides</div>
+  <div class="resource-grid">
+    <div class="resource-card"><div class="resource-icon">📄</div><h3>Professional CV Template</h3><p>A clean, ATS-friendly CV template tailored for Ethiopian students applying for internships.</p><a href="#" class="btn btn-primary btn-sm">Download</a></div>
+    <div class="resource-card"><div class="resource-icon">✍️</div><h3>Cover Letter Template</h3><p>A professional cover letter template to accompany your internship applications.</p><a href="#" class="btn btn-primary btn-sm">Download</a></div>
+    <div class="resource-card"><div class="resource-icon">📊</div><h3>Portfolio Guide</h3><p>How to build a compelling portfolio that showcases your skills and projects.</p><a href="#" class="btn btn-ghost btn-sm">Read Guide</a></div>
+  </div>
+
+  <div id="guide" class="section-title">📘 Internship Guide</div>
+  <div class="tip-list">
+    <div class="tip-item"><div class="tip-num">1</div><div><h4>Research the Company</h4><p>Before applying, thoroughly research the company's mission, values, and recent projects to tailor your application.</p></div></div>
+    <div class="tip-item"><div class="tip-num">2</div><div><h4>Customize Your Application</h4><p>Tailor your CV and cover letter for each internship. Highlight relevant skills and experiences.</p></div></div>
+    <div class="tip-item"><div class="tip-num">3</div><div><h4>Prepare for the Interview</h4><p>Practice common interview questions and prepare examples of your work and achievements.</p></div></div>
+    <div class="tip-item"><div class="tip-num">4</div><div><h4>Be Professional</h4><p>Dress appropriately, arrive on time, and maintain professional communication throughout the process.</p></div></div>
+    <div class="tip-item"><div class="tip-num">5</div><div><h4>Follow Up</h4><p>Send a thank-you email after interviews and follow up on your application status professionally.</p></div></div>
+  </div>
+
+  <div id="interview" class="section-title">🎤 Interview Tips</div>
+  <div class="resource-grid">
+    <div class="resource-card"><div class="resource-icon">🎯</div><h3>Common Questions</h3><p>50 most common internship interview questions with sample answers.</p><a href="#" class="btn btn-ghost btn-sm">View List</a></div>
+    <div class="resource-card"><div class="resource-icon">🧠</div><h3>STAR Method</h3><p>Learn the Situation-Task-Action-Result framework for answering behavioral questions.</p><a href="#" class="btn btn-ghost btn-sm">Learn More</a></div>
+    <div class="resource-card"><div class="resource-icon">👔</div><h3>Dress Code Guide</h3><p>What to wear for different types of internship interviews in Ethiopia.</p><a href="#" class="btn btn-ghost btn-sm">Read Guide</a></div>
+  </div>
+
+  <div id="letters" class="section-title">✉️ Recommendation Letters</div>
+  <div class="tip-list">
+    <div class="tip-item"><div class="tip-num">💡</div><div><h4>Official Recommendation Letters</h4><p>Once your internship application is accepted, you can generate an official recommendation letter from the Admin Portal. The letter includes your name, university, internship title, company, start date, and duration.</p></div></div>
+    <div class="tip-item"><div class="tip-num">📋</div><div><h4>How to Request</h4><p>Ask your university coordinator or admin to generate your recommendation letter through the InternLink Admin Portal after your application is accepted.</p></div></div>
+  </div>
+</div>
+<%- include('partials/footer') %>
+</body>
+</html>

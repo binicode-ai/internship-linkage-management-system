@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= student.first_name %> <%= student.last_name %> — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div><h1><%= student.first_name %> <%= student.last_name %></h1><p>Student profile</p></div>
+  <a href="/students" class="btn btn-ghost">← Back to Students</a>
+</div>
+
+<div class="card card-body" style="max-width:600px; margin-bottom:24px;">
+  <table class="detail-table">
+    <tr><th>Email</th><td><%= student.email %></td></tr>
+    <tr><th>Department</th><td><%= student.department %></td></tr>
+    <tr><th>Year of Study</th><td>Year <%= student.year_of_study %></td></tr>
+    <tr><th>University</th><td><%= student.university_name %></td></tr>
+  </table>
+</div>
+
+<div class="page-header" style="margin-bottom:16px;">
+  <div><h1 style="font-size:1.1rem;">Applications</h1></div>
+</div>
+
+<div class="table-wrap">
+  <% if (applications.length === 0) { %>
+    <div class="empty-state"><div class="empty-icon">📋</div><p>No applications submitted yet.</p></div>
+  <% } else { %>
+  <table>
+    <thead><tr><th>Internship</th><th>Date Applied</th><th>Status</th></tr></thead>
+    <tbody>
+      <% applications.forEach(a => { %>
+      <tr>
+        <td><%= a.internship_title %></td>
+        <td><%= new Date(a.application_date).toLocaleDateString() %></td>
+        <td>
+          <span class="badge badge-<%= a.status.toLowerCase() %>"><%= a.status %></span>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

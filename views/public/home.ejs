@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>InternLink — Connecting Students, Universities & Industry</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #fff; color: #111827; }
+
+/* ── Hero ── */
+.hero {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 50%, #2563eb 100%);
+  padding: 80px 60px 70px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+}
+.hero-tag { display: inline-block; background: rgba(255,255,255,0.15); color: #bfdbfe; padding: 5px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; margin-bottom: 18px; letter-spacing: 0.04em; }
+.hero h1 { font-size: clamp(2rem,4vw,3rem); font-weight: 800; color: #fff; line-height: 1.15; margin-bottom: 18px; }
+.hero p { font-size: 1.05rem; color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 32px; max-width: 480px; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-white { background: #fff; color: #1d4ed8; padding: 12px 28px; border-radius: 8px; font-size: 0.95rem; font-weight: 700; text-decoration: none; transition: box-shadow 0.15s; }
+.btn-white:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+.btn-outline-w { background: transparent; color: #fff; padding: 12px 28px; border-radius: 8px; font-size: 0.95rem; font-weight: 600; text-decoration: none; border: 2px solid rgba(255,255,255,0.4); transition: border-color 0.15s; }
+.btn-outline-w:hover { border-color: #fff; }
+/* Hero right — stats card */
+.hero-card {
+  background: rgba(255,255,255,0.1); backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 28px;
+}
+.hero-card-title { color: rgba(255,255,255,0.6); font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 20px; }
+.hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.hero-stat { background: rgba(255,255,255,0.1); border-radius: 10px; padding: 16px; }
+.hero-stat .num { font-size: 1.8rem; font-weight: 800; color: #fff; line-height: 1; }
+.hero-stat .lbl { font-size: 0.75rem; color: rgba(255,255,255,0.55); margin-top: 4px; }
+.hero-list { display: flex; flex-direction: column; gap: 8px; }
+.hero-list-item { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
+.hero-list-item .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.hero-list-item .t { font-size: 0.82rem; color: rgba(255,255,255,0.85); font-weight: 600; }
+.hero-list-item .s { font-size: 0.72rem; color: rgba(255,255,255,0.45); }
+
+/* ── Stats strip ── */
+.stats-strip { background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+.stats-inner { max-width: 1100px; margin: 0 auto; padding: 32px 40px; display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+.stat-box { text-align: center; }
+.stat-num { font-size: 2.2rem; font-weight: 800; color: #1d4ed8; }
+.stat-lbl { font-size: 0.82rem; color: #6b7280; margin-top: 4px; }
+
+/* ── Section layout ── */
+.section { max-width: 1100px; margin: 0 auto; padding: 72px 40px; }
+.section-tag { display: inline-block; background: #eff6ff; color: #2563eb; padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+.section-title { font-size: clamp(1.5rem,3vw,2rem); font-weight: 800; color: #111827; margin-bottom: 10px; }
+.section-sub { color: #6b7280; font-size: 0.95rem; max-width: 520px; line-height: 1.7; }
+.section-header { margin-bottom: 48px; }
+.section-header.center { text-align: center; }
+.section-header.center .section-sub { margin: 0 auto; }
+
+/* ── Feature cards ── */
+.features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 24px; }
+.feature-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 28px 24px; transition: box-shadow 0.2s, transform 0.2s; }
+.feature-card:hover { box-shadow: 0 8px 32px rgba(37,99,235,0.1); transform: translateY(-3px); }
+.feature-icon { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 16px; }
+.feature-card h3 { font-size: 1rem; font-weight: 700; color: #111827; margin-bottom: 8px; }
+.feature-card p { font-size: 0.85rem; color: #6b7280; line-height: 1.6; }
+.feature-card .learn-more { display: inline-block; margin-top: 14px; color: #2563eb; font-size: 0.83rem; font-weight: 600; text-decoration: none; }
+.feature-card .learn-more:hover { text-decoration: underline; }
+
+/* ── Internship cards ── */
+.intern-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 24px; }
+.intern-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 24px; transition: box-shadow 0.2s, transform 0.2s; display: flex; flex-direction: column; }
+.intern-card:hover { box-shadow: 0 8px 32px rgba(37,99,235,0.1); transform: translateY(-3px); }
+.intern-card .badge-popular { display: inline-block; background: #fef3c7; color: #92400e; font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-bottom: 10px; }
+.intern-card h3 { font-size: 1rem; font-weight: 700; color: #111827; margin-bottom: 4px; }
+.intern-card .co { color: #2563eb; font-size: 0.83rem; font-weight: 600; margin-bottom: 12px; }
+.intern-card .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.intern-card .tag { font-size: 0.73rem; color: #6b7280; background: #f3f4f6; padding: 3px 8px; border-radius: 5px; }
+.intern-card .actions { margin-top: auto; display: flex; gap: 8px; }
+.btn-primary-sm { background: #2563eb; color: #fff; padding: 8px 18px; border-radius: 7px; font-size: 0.83rem; font-weight: 600; text-decoration: none; transition: background 0.15s; }
+.btn-primary-sm:hover { background: #1d4ed8; }
+.btn-ghost-sm { background: #f3f4f6; color: #374151; padding: 8px 18px; border-radius: 7px; font-size: 0.83rem; font-weight: 600; text-decoration: none; transition: background 0.15s; }
+.btn-ghost-sm:hover { background: #e5e7eb; }
+
+/* ── How it works ── */
+.steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
+.step { text-align: center; padding: 36px 24px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 14px; }
+.step-num { width: 56px; height: 56px; border-radius: 50%; background: #2563eb; color: #fff; font-size: 1.3rem; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+.step h3 { font-size: 1rem; font-weight: 700; color: #111827; margin-bottom: 8px; }
+.step p { font-size: 0.85rem; color: #6b7280; line-height: 1.6; }
+
+/* ── Testimonials ── */
+.testimonials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 24px; }
+.t-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 28px; }
+.t-stars { color: #f59e0b; font-size: 0.9rem; margin-bottom: 14px; }
+.t-quote { font-size: 0.9rem; color: #374151; line-height: 1.75; margin-bottom: 20px; font-style: italic; padding-left: 16px; border-left: 3px solid #2563eb; }
+.t-author { display: flex; align-items: center; gap: 12px; }
+.t-av { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1rem; flex-shrink: 0; }
+.t-name { font-weight: 700; font-size: 0.875rem; color: #111827; }
+.t-role { font-size: 0.78rem; color: #6b7280; }
+
+/* ── FAQ ── */
+.faq-list { max-width: 720px; margin: 0 auto; }
+.faq-item { border: 1px solid #e5e7eb; border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+.faq-q { padding: 18px 20px; font-weight: 600; font-size: 0.9rem; color: #111827; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #fff; }
+.faq-q:hover { background: #f9fafb; }
+.faq-a { padding: 0 20px; font-size: 0.875rem; color: #374151; line-height: 1.75; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.2s; }
+.faq-item.open .faq-a { max-height: 200px; padding-bottom: 18px; }
+.faq-arrow { font-size: 0.7rem; color: #9ca3af; transition: transform 0.25s; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+/* ── CTA banner ── */
+.cta-banner { background: linear-gradient(135deg, #1e3a8a, #1d4ed8); padding: 64px 40px; text-align: center; }
+.cta-banner h2 { font-size: 1.9rem; font-weight: 800; color: #fff; margin-bottom: 12px; }
+.cta-banner p { color: rgba(255,255,255,0.75); font-size: 1rem; margin-bottom: 28px; }
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ── Gray section bg ── */
+.bg-gray { background: #f9fafb; border-top: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) { .hero { grid-template-columns: 1fr; padding: 60px 24px; } .hero-card { display: none; } .stats-inner { grid-template-columns: repeat(2,1fr); } .steps-grid { grid-template-columns: 1fr; } }
+@media (max-width: 540px) { .stats-inner { grid-template-columns: 1fr; } .section { padding: 56px 20px; } .cta-banner { padding: 48px 20px; } }
+</style>
+</head>
+<body>
+<%- include('partials/nav') %>
+
+<!-- Hero -->
+<section class="hero">
+  <div>
+    <div class="hero-tag">🇪🇹 Based in Ethiopia</div>
+    <h1>Connecting Students, Universities, and Industry</h1>
+    <p>Find internships, apply online, track your progress, and connect with top companies — all in one platform built for Ethiopia.</p>
+    <div class="hero-btns">
+      <a href="/public/internships" class="btn-white">Browse Internships</a>
+      <a href="/portal/register" class="btn-outline-w">Get Started</a>
+    </div>
+  </div>
+  <div class="hero-card">
+    <div class="hero-card-title">Platform Overview</div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num"><%= stats.students %>+</div><div class="lbl">Students</div></div>
+      <div class="hero-stat"><div class="num"><%= stats.companies %>+</div><div class="lbl">Companies</div></div>
+      <div class="hero-stat"><div class="num"><%= stats.internships %>+</div><div class="lbl">Internships</div></div>
+      <div class="hero-stat"><div class="num"><%= stats.universities %>+</div><div class="lbl">Universities</div></div>
+    </div>
+    <div class="hero-list">
+      <% internships.slice(0,3).forEach((i,idx) => { %>
+      <div class="hero-list-item">
+        <div class="dot" style="background:<%= ['#3b82f6','#10b981','#8b5cf6'][idx] %>"></div>
+        <div>
+          <div class="t"><%= i.title.substring(0,30) %><%= i.title.length>30?'…':'' %></div>
+          <div class="s"><%= i.company_name %></div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- Stats strip -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-box"><div class="stat-num"><%= stats.students %>+</div><div class="stat-lbl">Registered Students</div></div>
+    <div class="stat-box"><div class="stat-num"><%= stats.companies %>+</div><div class="stat-lbl">Partner Companies</div></div>
+    <div class="stat-box"><div class="stat-num"><%= stats.internships %>+</div><div class="stat-lbl">Internship Openings</div></div>
+    <div class="stat-box"><div class="stat-num"><%= stats.universities %>+</div><div class="stat-lbl">Universities</div></div>
+  </div>
+</div>
+
+<!-- What We Do -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-tag">Our Services</div>
+    <div class="section-title">What InternLink Does Best</div>
+    <div class="section-sub">Comprehensive internship management tailored for Ethiopian universities and industry partners.</div>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#eff6ff">🔍</div>
+      <h3>Internship Discovery</h3>
+      <p>Browse hundreds of opportunities filtered by location, industry, and stipend across Ethiopia.</p>
+      <a href="/public/internships" class="learn-more">Browse Internships →</a>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#f0fdf4">📋</div>
+      <h3>Online Application</h3>
+      <p>Apply for internships with a single click through your personalized student portal.</p>
+      <a href="/portal/register" class="learn-more">Get Started →</a>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#faf5ff">📊</div>
+      <h3>Status Tracking</h3>
+      <p>Monitor your application status in real-time — Pending, Accepted, or Rejected.</p>
+      <a href="/portal/login" class="learn-more">View Dashboard →</a>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#fff7ed">⭐</div>
+      <h3>Evaluation System</h3>
+      <p>Structured performance reviews covering technical skills, communication, and teamwork.</p>
+      <a href="/public/about" class="learn-more">Learn More →</a>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#fdf2f8">💬</div>
+      <h3>Communication</h3>
+      <p>Direct messaging between students, supervisors, and administrators for seamless coordination.</p>
+      <a href="/portal/complaints" class="learn-more">Learn More →</a>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#f0fdfa">📧</div>
+      <h3>Email Notifications</h3>
+      <p>Automatic alerts when your application status changes so you're always informed.</p>
+      <a href="/portal/register" class="learn-more">Sign Up →</a>
+    </div>
+  </div>
+</div>
+
+<!-- Featured Internships -->
+<div class="bg-gray">
+  <div class="section">
+    <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:36px">
+      <div>
+        <div class="section-tag">⭐ Live Opportunities</div>
+        <div class="section-title">Featured Internships</div>
+        <div class="section-sub">Latest opportunities from our partner companies.</div>
+      </div>
+      <a href="/public/internships" class="btn-ghost-sm">View All →</a>
+    </div>
+    <% if (internships.length === 0) { %>
+      <p style="color:#6b7280;text-align:center;padding:40px">No internships posted yet. Check back soon.</p>
+    <% } else { %>
+    <div class="intern-grid">
+      <% internships.forEach((i,idx) => { %>
+      <div class="intern-card">
+        <% if (idx === 0) { %><div class="badge-popular">⭐ FEATURED</div><% } %>
+        <h3><%= i.title %></h3>
+        <div class="co">🏢 <%= i.company_name %></div>
+        <div class="tags">
+          <span class="tag">📍 <%= i.company_location %></span>
+          <span class="tag">⏱ <%= i.duration_months %> months</span>
+          <% if (i.stipend) { %><span class="tag">💰 ETB <%= Number(i.stipend).toLocaleString() %></span><% } %>
+        </div>
+        <div class="actions">
+          <a href="/public/internships/<%= i.internship_id %>" class="btn-primary-sm">View Details</a>
+          <a href="/portal/apply" class="btn-ghost-sm">Apply</a>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <% } %>
+  </div>
+</div>
+
+<!-- How It Works -->
+<div class="section">
+  <div class="section-header center">
+    <div class="section-tag">How We Work</div>
+    <div class="section-title">Our Simple Process</div>
+    <div class="section-sub">From registration to placement, we make the process smooth and transparent.</div>
+  </div>
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Browse Internships</h3>
+      <p>Explore hundreds of opportunities from top Ethiopian companies across all industries and locations.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Apply Online</h3>
+      <p>Create your student account and submit applications with a single click through your personal portal.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Track & Get Placed</h3>
+      <p>Monitor your application in real-time and receive email notifications when accepted.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Testimonials -->
+<div class="bg-gray">
+  <div class="section">
+    <div class="section-header center">
+      <div class="section-tag">Success Stories</div>
+      <div class="section-title">What Our Users Say</div>
+      <div class="section-sub">Real feedback from students and companies who use InternLink.</div>
+    </div>
+    <div class="testimonials-grid">
+      <div class="t-card">
+        <div class="t-stars">★★★★★</div>
+        <div class="t-quote">InternLink helped me land my dream internship at Ethio Telecom. The application process was seamless and I got notified instantly when I was accepted!</div>
+        <div class="t-author"><div class="t-av" style="background:linear-gradient(135deg,#2563eb,#7c3aed)">AB</div><div><div class="t-name">Abebe Bekele</div><div class="t-role">Computer Science, AAU · Ethio Telecom</div></div></div>
+      </div>
+      <div class="t-card">
+        <div class="t-stars">★★★★★</div>
+        <div class="t-quote">We found highly qualified interns through InternLink. The evaluation system made it easy to track performance and provide structured feedback.</div>
+        <div class="t-author"><div class="t-av" style="background:linear-gradient(135deg,#059669,#0891b2)">ET</div><div><div class="t-name">Ethio Telecom HR</div><div class="t-role">Partner Company</div></div></div>
+      </div>
+      <div class="t-card">
+        <div class="t-stars">★★★★★</div>
+        <div class="t-quote">The platform streamlined our internship coordination. We manage placements, supervisors, and evaluations all in one place. Highly recommended.</div>
+        <div class="t-author"><div class="t-av" style="background:linear-gradient(135deg,#d97706,#dc2626)">AU</div><div><div class="t-name">Dr. Almaz Tadesse</div><div class="t-role">Internship Coordinator, ASTU</div></div></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:32px">
+      <a href="/public/success-stories" class="btn-ghost-sm" style="padding:10px 24px;font-size:0.875rem">Read More Stories →</a>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+  <div class="section-header center">
+    <div class="section-tag">FAQ</div>
+    <div class="section-title">Frequently Asked Questions</div>
+    <div class="section-sub">Find answers to common questions about InternLink.</div>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item open">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I apply for an internship? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Create a student account at <a href="/portal/register" style="color:#2563eb">/portal/register</a>, then browse internships and click "Apply Now". Your application is submitted instantly.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I track my application status? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Log in to your Student Portal. Your dashboard shows all applications with real-time status updates. You'll also receive email notifications when your status changes.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do companies post internships? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Companies are registered by the admin. Once registered, the admin posts internship opportunities on behalf of the company through the Admin Portal.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Will I receive a notification when accepted? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Yes! When your application is accepted, you automatically receive an email with full internship details and company information.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Is InternLink free for students? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Yes, InternLink is completely free for students. Create your account, browse opportunities, and apply at no cost.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <h2>Ready to Start Your Internship Journey?</h2>
+  <p>Join Ethiopian students already using InternLink to launch their careers.</p>
+  <div class="cta-btns">
+    <a href="/portal/register" class="btn-white">Create Free Account</a>
+    <a href="/public/internships" class="btn-outline-w">Browse Internships</a>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
+
+<script>
+function toggleFaq(el) {
+  var item = el.parentElement;
+  document.querySelectorAll('.faq-item.open').forEach(function(o) { if (o !== item) o.classList.remove('open'); });
+  item.classList.toggle('open');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — InternLink Admin</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .kpi-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(175px,1fr)); gap:16px; margin-bottom:28px; }
+    .kpi { background:#fff; border-radius:var(--radius); border:1px solid var(--border); padding:20px 22px; box-shadow:var(--shadow); }
+    .kpi .lbl { font-size:0.7rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:8px; }
+    .kpi .val { font-size:2.2rem; font-weight:800; color:var(--navy); line-height:1; }
+    .kpi .sub { font-size:0.75rem; color:var(--muted); margin-top:4px; }
+    .kpi.bl { border-left:4px solid var(--accent); }
+    .kpi.gr { border-left:4px solid var(--green); }
+    .kpi.ye { border-left:4px solid var(--yellow); }
+    .kpi.re { border-left:4px solid var(--red); }
+    .bar-wrap { background:#fff; border-radius:var(--radius); border:1px solid var(--border); padding:20px 24px; box-shadow:var(--shadow); margin-bottom:28px; }
+    .bar-wrap .bar-title { font-size:0.9rem; font-weight:700; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; }
+    .status-bar { display:flex; border-radius:8px; overflow:hidden; height:14px; background:var(--border); }
+    .seg-a { background:var(--green); }
+    .seg-p { background:var(--yellow); }
+    .seg-r { background:var(--red); }
+    .legend { display:flex; gap:16px; margin-top:10px; font-size:0.78rem; color:var(--muted); }
+    .legend span { display:flex; align-items:center; gap:5px; }
+    .dot { width:9px; height:9px; border-radius:50%; display:inline-block; }
+  </style>
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="hero-banner">
+  <div>
+    <h2>Admin Dashboard</h2>
+    <p>Live overview of the Internship &amp; Industry Linkage Management System.</p>
+  </div>
+  <div class="hero-emoji">📊</div>
+</div>
+
+<!-- KPI cards -->
+<div class="kpi-grid">
+  <div class="kpi bl" data-aos="fade-up" data-aos-delay="0"><div class="lbl">Students</div><div class="val" data-count="<%= stats.students %>">0</div><div class="sub">Registered</div></div>
+  <div class="kpi bl" data-aos="fade-up" data-aos-delay="60"><div class="lbl">Companies</div><div class="val" data-count="<%= stats.companies %>">0</div><div class="sub">Partners</div></div>
+  <div class="kpi bl" data-aos="fade-up" data-aos-delay="120"><div class="lbl">Internships</div><div class="val" data-count="<%= stats.internships %>">0</div><div class="sub">Posted</div></div>
+  <div class="kpi bl" data-aos="fade-up" data-aos-delay="180"><div class="lbl">Applications</div><div class="val" data-count="<%= stats.applications %>">0</div><div class="sub">Total</div></div>
+  <div class="kpi gr" data-aos="fade-up" data-aos-delay="240"><div class="lbl">Accepted</div><div class="val" data-count="<%= stats.accepted %>" style="color:var(--green)">0</div><div class="sub">Placements</div></div>
+  <div class="kpi ye" data-aos="fade-up" data-aos-delay="300"><div class="lbl">Pending</div><div class="val" data-count="<%= stats.pending %>" style="color:var(--yellow)">0</div><div class="sub">Awaiting review</div></div>
+  <div class="kpi re" data-aos="fade-up" data-aos-delay="360"><div class="lbl">Rejected</div><div class="val" data-count="<%= stats.rejected %>" style="color:var(--red)">0</div><div class="sub">Not accepted</div></div>
+  <div class="kpi bl" data-aos="fade-up" data-aos-delay="420"><div class="lbl">Evaluations</div><div class="val" data-count="<%= stats.evaluations %>">0</div><div class="sub">Submitted</div></div>
+</div>
+
+<!-- Status breakdown bar -->
+<% if (stats.applications > 0) { %>
+<div class="bar-wrap">
+  <div class="bar-title">
+    <span>Application Status Breakdown</span>
+    <% if (stats.openComplaints > 0) { %>
+      <a href="/complaints" class="badge badge-pending" style="text-decoration:none;">⚠️ <%= stats.openComplaints %> open complaint<%= stats.openComplaints !== 1 ? 's' : '' %></a>
+    <% } %>
+  </div>
+  <div class="status-bar">
+    <div class="seg-a" style="width:<%= Math.round(stats.accepted/stats.applications*100) %>%"></div>
+    <div class="seg-p" style="width:<%= Math.round(stats.pending/stats.applications*100) %>%"></div>
+    <div class="seg-r" style="width:<%= Math.round(stats.rejected/stats.applications*100) %>%"></div>
+  </div>
+  <div class="legend">
+    <span><span class="dot" style="background:var(--green)"></span>Accepted <%= Math.round(stats.accepted/stats.applications*100) %>%</span>
+    <span><span class="dot" style="background:var(--yellow)"></span>Pending <%= Math.round(stats.pending/stats.applications*100) %>%</span>
+    <span><span class="dot" style="background:var(--red)"></span>Rejected <%= Math.round(stats.rejected/stats.applications*100) %>%</span>
+  </div>
+</div>
+<% } %>
+
+<!-- Module cards -->
+<div class="dash-grid">
+  <a href="/universities" class="dash-card"><div class="dash-card-icon icon-blue">🏫</div><h3>Universities</h3><p>Register and manage partner universities.</p></a>
+  <a href="/students" class="dash-card"><div class="dash-card-icon icon-green">🎓</div><h3>Students</h3><p>Browse enrolled students and affiliations.</p></a>
+  <a href="/companies" class="dash-card"><div class="dash-card-icon icon-purple">🏢</div><h3>Companies</h3><p>Manage host companies offering internships.</p></a>
+  <a href="/internships" class="dash-card"><div class="dash-card-icon icon-orange">💼</div><h3>Internships</h3><p>Post and track internship opportunities.</p></a>
+  <a href="/applications" class="dash-card"><div class="dash-card-icon icon-pink">📋</div><h3>Applications</h3><p>Review and update application statuses.</p></a>
+  <a href="/supervisors" class="dash-card"><div class="dash-card-icon icon-teal">👤</div><h3>Supervisors</h3><p>Assign supervisors to accepted interns.</p></a>
+  <a href="/evaluations" class="dash-card"><div class="dash-card-icon icon-yellow">⭐</div><h3>Evaluations</h3><p>Submit and review performance evaluations.</p></a>
+  <a href="/complaints" class="dash-card"><div class="dash-card-icon icon-pink">💬</div><h3>Complaints</h3><p>Respond to student complaints and messages.</p></a>
+</div>
+
+<%- include('partials/footer') %>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+AOS.init({duration:600,once:true,offset:40});
+// Count-up
+function countUp(el,target){
+  var start=0,step=Math.max(1,Math.ceil(target/50));
+  var t=setInterval(function(){start+=step;if(start>=target){start=target;clearInterval(t)}el.textContent=start;},30);
+}
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){countUp(e.target,parseInt(e.target.dataset.count)||0);obs.unobserve(e.target);}});
+},{threshold:0.5});
+document.querySelectorAll('[data-count]').forEach(function(el){obs.observe(el)});
+</script>
+</body>
+</html>

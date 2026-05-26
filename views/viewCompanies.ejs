@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Companies — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div><h1>Companies</h1><p>Industry partners offering internships</p></div>
+  <a href="/companies/add" class="btn btn-primary">+ Add Company</a>
+</div>
+
+<div class="table-wrap">
+  <% if (companies.length === 0) { %>
+    <div class="empty-state"><div class="empty-icon">🏢</div><p>No companies registered yet.</p></div>
+  <% } else { %>
+  <table>
+    <thead><tr><th>Company</th><th>Industry</th><th>Location</th><th>Contact Email</th><th>Phone</th><th>Actions</th></tr></thead>
+    <tbody>
+      <% companies.forEach(c => { %>
+      <tr>
+        <td><strong><%= c.company_name %></strong></td>
+        <td><%= c.industry_type %></td>
+        <td><%= c.location %></td>
+        <td><%= c.contact_email %></td>
+        <td><%= c.phone_number %></td>
+        <td>
+          <form action="/companies/<%= c.company_id %>?_method=DELETE" method="POST" style="display:inline;">
+            <input type="hidden" name="_method" value="DELETE">
+            <button class="btn btn-danger btn-sm" onclick="return confirm('Delete this company?')">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

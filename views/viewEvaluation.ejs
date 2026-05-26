@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluations — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<% if (detail) { %>
+  <% const e = evaluations[0]; %>
+  <div class="page-header">
+    <div><h1>Evaluation Detail</h1><p><%= e.student_name %></p></div>
+    <a href="/evaluations" class="btn btn-ghost">← Back</a>
+  </div>
+
+  <div class="card card-body" style="max-width:600px;">
+    <table class="detail-table">
+      <tr><th>Intern</th><td><%= e.student_name %></td></tr>
+      <tr><th>University</th><td><%= e.university_name %></td></tr>
+      <tr><th>Company</th><td><%= e.company_name %></td></tr>
+      <tr><th>Internship</th><td><%= e.internship_title %></td></tr>
+      <tr><th>Technical Skills</th><td>
+        <div class="score-bar">
+          <span><%= e.technical_skills %>/5</span>
+          <div class="score-dots">
+            <% for(let i=1;i<=5;i++) { %><div class="score-dot <%= i<=e.technical_skills ? 'filled' : '' %>"></div><% } %>
+          </div>
+        </div>
+      </td></tr>
+      <tr><th>Communication</th><td>
+        <div class="score-bar">
+          <span><%= e.communication %>/5</span>
+          <div class="score-dots">
+            <% for(let i=1;i<=5;i++) { %><div class="score-dot <%= i<=e.communication ? 'filled' : '' %>"></div><% } %>
+          </div>
+        </div>
+      </td></tr>
+      <tr><th>Teamwork</th><td>
+        <div class="score-bar">
+          <span><%= e.teamwork %>/5</span>
+          <div class="score-dots">
+            <% for(let i=1;i<=5;i++) { %><div class="score-dot <%= i<=e.teamwork ? 'filled' : '' %>"></div><% } %>
+          </div>
+        </div>
+      </td></tr>
+      <tr><th>Overall Score</th><td>
+        <div class="score-bar">
+          <span><%= e.overall_score %>/5</span>
+          <div class="score-dots">
+            <% for(let i=1;i<=5;i++) { %><div class="score-dot <%= i<=e.overall_score ? 'filled' : '' %>"></div><% } %>
+          </div>
+        </div>
+      </td></tr>
+      <tr><th>Average</th><td><strong><%= e.average_score %> / 5</strong></td></tr>
+      <tr><th>Comments</th><td><%= e.comments || '—' %></td></tr>
+    </table>
+  </div>
+
+<% } else { %>
+
+  <div class="page-header">
+    <div><h1>Evaluations</h1><p>Intern performance records</p></div>
+    <a href="/evaluations/add" class="btn btn-primary">+ New Evaluation</a>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-toolbar">
+      <form action="/evaluations" method="GET" class="filter-bar">
+        <input type="text" name="company" placeholder="Filter by company" value="<%= companyFilter %>">
+        <input type="text" name="university" placeholder="Filter by university" value="<%= universityFilter %>">
+        <button type="submit" class="btn btn-ghost btn-sm">Filter</button>
+        <a href="/evaluations" class="btn btn-ghost btn-sm">Clear</a>
+      </form>
+    </div>
+
+    <% if (evaluations.length === 0) { %>
+      <div class="empty-state"><div class="empty-icon">⭐</div><p>No evaluations found.</p></div>
+    <% } else { %>
+    <table>
+      <thead>
+        <tr><th>Intern</th><th>University</th><th>Company</th><th>Internship</th><th>Tech</th><th>Comm</th><th>Team</th><th>Overall</th><th>Avg</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <% evaluations.forEach(e => { %>
+        <tr>
+          <td><strong><%= e.student_name %></strong></td>
+          <td><%= e.university_name %></td>
+          <td><%= e.company_name %></td>
+          <td><%= e.internship_title %></td>
+          <td><%= e.technical_skills %>/5</td>
+          <td><%= e.communication %>/5</td>
+          <td><%= e.teamwork %>/5</td>
+          <td><%= e.overall_score %>/5</td>
+          <td><strong><%= e.average_score %></strong></td>
+          <td><a href="/evaluations/<%= e.application_id %>" class="btn btn-ghost btn-sm">View</a></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <% } %>
+  </div>
+
+<% } %>
+
+<%- include('partials/footer') %>
+</body>
+</html>

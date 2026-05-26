@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apply for Internship — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div><h1>Apply for Internship</h1><p>Submit a new internship application</p></div>
+  <a href="/applications" class="btn btn-ghost">← Back</a>
+</div>
+
+<div class="form-card">
+  <div class="form-card-header"><h2>Application Details</h2></div>
+  <div class="form-card-body">
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-error">⚠️ <%= error %></div>
+    <% } %>
+    <form action="/applications/add" method="POST">
+      <div class="form-group">
+        <label>Student</label>
+        <select name="student_id" required>
+          <option value="">— Select Student —</option>
+          <% students.forEach(s => { %>
+            <option value="<%= s.student_id %>"
+              <%= (typeof student_id !== 'undefined' && student_id == s.student_id) ? 'selected' : '' %>>
+              <%= s.first_name %> <%= s.last_name %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Internship</label>
+        <select name="internship_id" required>
+          <option value="">— Select Internship —</option>
+          <% internships.forEach(i => { %>
+            <option value="<%= i.internship_id %>"
+              <%= (typeof internship_id !== 'undefined' && internship_id == i.internship_id) ? 'selected' : '' %>>
+              <%= i.title %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Submit Application</button>
+        <a href="/applications" class="btn btn-ghost">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Evaluation — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div><h1>Submit Evaluation</h1><p>Rate intern performance across key metrics</p></div>
+  <a href="/evaluations" class="btn btn-ghost">← Back</a>
+</div>
+
+<div class="form-card">
+  <div class="form-card-header"><h2>Performance Evaluation</h2></div>
+  <div class="form-card-body">
+    <% if (error) { %>
+      <div class="alert alert-error">⚠️ <%= error %></div>
+    <% } %>
+    <form action="/evaluations/add" method="POST">
+      <div class="form-group">
+        <label>Application</label>
+        <select name="application_id" required>
+          <option value="">— Select Accepted Application —</option>
+          <% acceptedApplications.forEach(a => { %>
+            <option value="<%= a.application_id %>"><%= a.student_name %> — <%= a.internship_title %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="form-group">
+          <label>Technical Skills (1–5)</label>
+          <input type="number" name="technical_skills" min="1" max="5" placeholder="1–5" required>
+        </div>
+        <div class="form-group">
+          <label>Communication (1–5)</label>
+          <input type="number" name="communication" min="1" max="5" placeholder="1–5" required>
+        </div>
+        <div class="form-group">
+          <label>Teamwork (1–5)</label>
+          <input type="number" name="teamwork" min="1" max="5" placeholder="1–5" required>
+        </div>
+        <div class="form-group">
+          <label>Overall Score (1–5)</label>
+          <input type="number" name="overall_score" min="1" max="5" placeholder="1–5" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Comments</label>
+        <textarea name="comments" placeholder="Additional feedback..."></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Submit Evaluation</button>
+        <a href="/evaluations" class="btn btn-ghost">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

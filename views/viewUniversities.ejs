@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universities — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div><h1>Universities</h1><p>Registered partner universities</p></div>
+  <a href="/universities/add" class="btn btn-primary">+ Add University</a>
+</div>
+
+<div class="table-wrap">
+  <% if (universities.length === 0) { %>
+    <div class="empty-state"><div class="empty-icon">🏫</div><p>No universities registered yet.</p></div>
+  <% } else { %>
+  <table>
+    <thead><tr><th>Name</th><th>Location</th><th>Contact Email</th><th>Actions</th></tr></thead>
+    <tbody>
+      <% universities.forEach(u => { %>
+      <tr>
+        <td><strong><%= u.university_name %></strong></td>
+        <td><%= u.location %></td>
+        <td><%= u.contact_email %></td>
+        <td>
+          <form action="/universities/<%= u.university_id %>" method="POST" style="display:inline;">
+            <input type="hidden" name="_method" value="DELETE">
+            <button class="btn btn-danger btn-sm" onclick="return confirm('Delete this university?')">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

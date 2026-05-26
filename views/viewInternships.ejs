@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internships — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div><h1>Internships</h1><p>Available internship opportunities</p></div>
+  <a href="/internships/add" class="btn btn-primary">+ Post Internship</a>
+</div>
+
+<div class="table-wrap">
+  <% if (internships.length === 0) { %>
+    <div class="empty-state"><div class="empty-icon">💼</div><p>No internships posted yet.</p></div>
+  <% } else { %>
+  <table>
+    <thead>
+      <tr><th>Title</th><th>Company</th><th>Duration</th><th>Start Date</th><th>Stipend</th><th>Status</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+      <% internships.forEach(i => { %>
+      <tr>
+        <td><strong><%= i.title %></strong></td>
+        <td><%= i.company_name %></td>
+        <td><%= i.duration_months %> mo</td>
+        <td><%= i.start_date ? new Date(i.start_date).toISOString().slice(0,10) : '—' %></td>
+        <td><%= i.stipend != null ? 'ETB ' + Number(i.stipend).toLocaleString() : '—' %></td>
+        <td><span class="badge badge-<%= i.status.toLowerCase() %>"><%= i.status %></span></td>
+        <td>
+          <button class="btn btn-ghost btn-sm" onclick="toggleEdit('<%= i.internship_id %>')">Edit</button>
+        </td>
+      </tr>
+      <tr id="edit-row-<%= i.internship_id %>" class="edit-row" style="display:none;">
+        <td colspan="7">
+          <form action="/internships/<%= i.internship_id %>/update" method="POST">
+            <div class="form-group"><label>Title</label><input name="title" required value="<%= i.title %>"></div>
+            <div class="form-group"><label>Description</label><input name="description" value="<%= i.description != null ? i.description : '' %>"></div>
+            <div class="form-group"><label>Duration (mo)</label><input name="duration_months" type="number" min="1" required value="<%= i.duration_months %>"></div>
+            <div class="form-group"><label>Start Date</label><input name="start_date" type="date" required value="<%= i.start_date ? new Date(i.start_date).toISOString().slice(0,10) : '' %>"></div>
+            <div class="form-group"><label>Stipend</label><input name="stipend" type="number" min="0" step="0.01" value="<%= i.stipend != null ? i.stipend : '' %>"></div>
+            <div style="display:flex;gap:8px;margin-top:4px;">
+              <button type="submit" class="btn btn-primary btn-sm">Save</button>
+              <button type="button" class="btn btn-ghost btn-sm" onclick="toggleEdit('<%= i.internship_id %>')">Cancel</button>
+            </div>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } %>
+</div>
+
+<script>
+  function toggleEdit(id) {
+    var row = document.getElementById('edit-row-' + id);
+    row.style.display = row.style.display === 'none' ? '' : 'none';
+  }
+</script>
+
+<%- include('partials/footer') %>
+</body>
+</html>

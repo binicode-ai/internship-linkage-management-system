@@ -1,0 +1,41 @@
+    </main>
+  </div>
+</div>
+
+<footer class="site-footer">
+  &copy; 2026 Internship &amp; Industry Linkage Management System &mdash; Ethiopia
+</footer>
+
+<script>
+// ── Desktop sidebar collapse ──────────────────────────────────────────────────
+function toggleDesktopSidebar() {
+  var s = document.getElementById('adminSidebar');
+  var m = document.querySelector('.main-wrap');
+  var f = document.querySelector('.site-footer');
+  if (!s || !m) return;
+  var collapsed = s.classList.toggle('collapsed');
+  m.style.marginLeft = collapsed ? '0' : 'var(--sidebar-w)';
+  s.style.transform = collapsed ? 'translateX(-100%)' : 'translateX(0)';
+  if (f) f.style.marginLeft = collapsed ? '0' : 'var(--sidebar-w)';
+}
+
+// ── Mobile sidebar drawer ─────────────────────────────────────────────────────
+function openSidebar() {
+  document.getElementById('adminSidebar').classList.add('open');
+  document.getElementById('sidebarOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSidebar() {
+  document.getElementById('adminSidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeSidebarOnMobile() {
+  if (window.innerWidth <= 768) closeSidebar();
+}
+
+// Close drawer on resize to desktop
+window.addEventListener('resize', function() {
+  if (window.innerWidth > 768) closeSidebar();
+});
+</script>

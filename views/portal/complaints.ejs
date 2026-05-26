@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Complaints — InternLink Portal</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0f172a;--accent:#3b82f6;--purple:#8b5cf6;--green:#10b981;--yellow:#f59e0b;--bg:#f8fafc;--border:#e2e8f0;--muted:#64748b;--text:#1e293b}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text)}
+.portal-layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--navy);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100}
+.sidebar-brand{padding:24px 20px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.sidebar-brand .name{color:#fff;font-weight:800;font-size:1rem}
+.sidebar-brand .sub{color:rgba(255,255,255,0.35);font-size:0.72rem;margin-top:2px}
+.sidebar-nav{flex:1;padding:16px 0}
+.nav-section{font-size:0.65rem;font-weight:700;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:0.08em;padding:12px 20px 4px}
+.sidebar-nav a{display:flex;align-items:center;gap:10px;padding:10px 20px;color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.875rem;font-weight:500;border-left:3px solid transparent;transition:all 0.15s}
+.sidebar-nav a:hover,.sidebar-nav a.active{color:#fff;background:rgba(59,130,246,0.15);border-left-color:var(--accent)}
+.sidebar-nav a .ni{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
+.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.08)}
+.sidebar-footer a{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.35);text-decoration:none;font-size:0.8rem;transition:color 0.15s}
+.sidebar-footer a:hover{color:#fff}
+.main-wrap{margin-left:240px;flex:1;display:flex;flex-direction:column}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-title{font-size:0.95rem;font-weight:600;color:var(--text)}
+.user-chip{display:flex;align-items:center;gap:8px;background:#f1f5f9;border-radius:20px;padding:6px 14px 6px 6px}
+.user-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.75rem;font-weight:700}
+.user-name{font-size:0.82rem;font-weight:600;color:var(--text)}
+.page-content{padding:32px;flex:1;max-width:900px}
+/* Form card */
+.form-card{background:#fff;border-radius:14px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-bottom:28px;overflow:hidden}
+.form-card-header{padding:18px 24px;border-bottom:1px solid var(--border);font-size:0.95rem;font-weight:700;color:var(--navy)}
+.form-card-body{padding:24px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:0.875rem;color:var(--text);font-family:inherit;transition:all 0.15s;background:#fff}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,0.12)}
+.form-group textarea{resize:vertical;min-height:100px}
+/* Complaint cards */
+.complaint-card{background:#fff;border-radius:14px;border:1px solid var(--border);padding:22px 24px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);transition:all 0.2s}
+.complaint-card:hover{box-shadow:0 6px 20px rgba(0,0,0,0.08)}
+.complaint-card .c-subject{font-weight:700;font-size:0.95rem;color:var(--navy);margin-bottom:6px}
+.complaint-card .c-meta{font-size:0.78rem;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.complaint-card .c-msg{font-size:0.875rem;color:#475569;line-height:1.7;margin-bottom:14px}
+.reply-box{background:linear-gradient(135deg,rgba(59,130,246,0.06),rgba(139,92,246,0.06));border:1px solid rgba(59,130,246,0.15);border-radius:10px;padding:14px 18px}
+.reply-label{font-size:0.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px}
+.reply-text{font-size:0.875rem;color:var(--text);line-height:1.6}
+.badge-open{background:#fef9c3;color:#92400e;padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:600}
+.badge-resolved{background:#dcfce7;color:#166534;padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:600}
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty-state .ei{font-size:3rem;margin-bottom:12px}
+@media(max-width:768px){.sidebar{display:none}.main-wrap{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="portal-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="name">🎓 InternLink</div>
+      <div class="sub">Student Portal</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Main</div>
+      <a href="/portal"><span class="ni">🏠</span> Dashboard</a>
+      <a href="/portal/apply"><span class="ni">💼</span> Apply</a>
+      <a href="/portal/complaints" class="active"><span class="ni">💬</span> Complaints</a>
+      <div class="nav-section">Explore</div>
+      <a href="/public/internships" target="_blank"><span class="ni">🔍</span> Browse Internships</a>
+      <a href="/public" target="_blank"><span class="ni">🌐</span> Public Site</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/portal/logout">🚪 Sign Out</a>
+    </div>
+  </aside>
+
+  <div class="main-wrap">
+    <header class="topbar">
+      <span class="topbar-title">Complaints & Messages</span>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="user-chip">
+          <div class="user-avatar"><%= studentName.charAt(0) %></div>
+          <span class="user-name"><%= studentName %></span>
+        </div>
+        <a href="/portal/logout" style="font-size:0.8rem;color:var(--muted);text-decoration:none">Sign Out</a>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <div style="margin-bottom:24px">
+        <h1 style="font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:6px">Complaints & Messages</h1>
+        <p style="color:var(--muted);font-size:0.875rem">Submit complaints or messages to the admin regarding your internship experience.</p>
+      </div>
+
+      <!-- New complaint form -->
+      <div class="form-card">
+        <div class="form-card-header">💬 New Complaint / Message</div>
+        <div class="form-card-body">
+          <% if (error) { %>
+            <div style="background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:12px 16px;border-radius:10px;font-size:0.875rem;margin-bottom:16px">⚠️ <%= error %></div>
+          <% } %>
+          <form action="/portal/complaints" method="POST">
+            <div class="form-group">
+              <label>Related Application (optional)</label>
+              <select name="application_id">
+                <option value="">— Not related to a specific application —</option>
+                <% applications.forEach(a => { %>
+                  <option value="<%= a.application_id %>"><%= a.internship_title %></option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Subject</label>
+              <input name="subject" placeholder="e.g. Dispute evaluation score for Software Engineering internship" required>
+            </div>
+            <div class="form-group">
+              <label>Message</label>
+              <textarea name="message" placeholder="Describe your complaint, request for clarification, or message to the admin/supervisor..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Complaint</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- My Evaluations (for reference when filing complaints) -->
+      <% if (evaluations && evaluations.length > 0) { %>
+      <div style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:14px;margin-top:8px">
+        My Evaluation Results
+      </div>
+      <% evaluations.forEach(ev => { %>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,0.04)">
+        <div style="font-weight:700;color:var(--navy);margin-bottom:8px"><%= ev.internship_title %></div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px">
+          <div style="background:#f9fafb;border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:1.2rem;font-weight:800;color:var(--accent)"><%= ev.technical_skills %>/5</div>
+            <div style="font-size:0.72rem;color:var(--muted)">Technical</div>
+          </div>
+          <div style="background:#f9fafb;border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:1.2rem;font-weight:800;color:var(--accent)"><%= ev.communication %>/5</div>
+            <div style="font-size:0.72rem;color:var(--muted)">Communication</div>
+          </div>
+          <div style="background:#f9fafb;border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:1.2rem;font-weight:800;color:var(--accent)"><%= ev.teamwork %>/5</div>
+            <div style="font-size:0.72rem;color:var(--muted)">Teamwork</div>
+          </div>
+          <div style="background:#f9fafb;border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:1.2rem;font-weight:800;color:var(--green)"><%= ev.avg_score %></div>
+            <div style="font-size:0.72rem;color:var(--muted)">Average</div>
+          </div>
+        </div>
+        <% if (ev.comments) { %>
+        <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 14px;font-size:0.85rem;color:#1e40af">
+          <div style="font-size:0.7rem;font-weight:700;color:#3b82f6;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Supervisor Comments</div>
+          <%= ev.comments %>
+        </div>
+        <% } %>
+      </div>
+      <% }) %>
+      <% } %>
+
+      <!-- Complaints list -->
+      <div style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:16px">
+        My Complaints <span style="font-size:0.8rem;font-weight:500;color:var(--muted);margin-left:6px">(<%= complaints.length %>)</span>
+      </div>
+
+      <% if (complaints.length === 0) { %>
+        <div class="empty-state"><div class="ei">💬</div><p>No complaints submitted yet.</p></div>
+      <% } else { %>
+        <% complaints.forEach(c => { %>
+        <div class="complaint-card">
+          <div class="c-subject"><%= c.subject %></div>
+          <div class="c-meta">
+            <% if (c.internship_title) { %><span>📋 <%= c.internship_title %></span><% } %>
+            <span>🕐 <%= new Date(c.created_at).toLocaleDateString('en-ET',{year:'numeric',month:'short',day:'numeric'}) %></span>
+            <span class="badge-<%= c.status === 'Resolved' ? 'resolved' : 'open' %>"><%= c.status %></span>
+          </div>
+          <div class="c-msg"><%= c.message %></div>
+          <% if (c.admin_reply) { %>
+            <div class="reply-box">
+              <div class="reply-label">Admin Reply</div>
+              <div class="reply-text"><%= c.admin_reply %></div>
+            </div>
+          <% } else { %>
+            <div style="font-size:0.78rem;color:var(--muted);font-style:italic">Awaiting admin response...</div>
+          <% } %>
+        </div>
+        <% }) %>
+      <% } %>
+    </main>
+  </div>
+</div>
+</body>
+</html>

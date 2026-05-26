@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error <%= status %> — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div style="text-align:center;padding:80px 20px;">
+  <div style="font-size:4rem;margin-bottom:16px;"><%= status === 404 ? '🔍' : '⚠️' %></div>
+  <h1 style="font-size:3rem;font-weight:800;color:var(--navy);margin-bottom:8px;"><%= status %></h1>
+  <p style="color:var(--muted);font-size:1rem;margin-bottom:28px;"><%= message %></p>
+  <a href="/" class="btn btn-primary">← Back to Dashboard</a>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

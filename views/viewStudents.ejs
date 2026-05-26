@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Students — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div><h1>Students</h1><p>Enrolled students and their affiliations</p></div>
+  <a href="/students/add" class="btn btn-primary">+ Add Student</a>
+</div>
+
+<div class="table-wrap">
+  <% if (students.length === 0) { %>
+    <div class="empty-state"><div class="empty-icon">🎓</div><p>No students registered yet.</p></div>
+  <% } else { %>
+  <table>
+    <thead><tr><th>Name</th><th>Email</th><th>Department</th><th>Year</th><th>University</th><th>Actions</th></tr></thead>
+    <tbody>
+      <% students.forEach(s => { %>
+      <tr>
+        <td><strong><%= s.first_name %> <%= s.last_name %></strong></td>
+        <td><%= s.email %></td>
+        <td><%= s.department %></td>
+        <td>Year <%= s.year_of_study %></td>
+        <td><%= s.university_name %></td>
+        <td><a href="/students/<%= s.student_id %>" class="btn btn-ghost btn-sm">View</a></td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

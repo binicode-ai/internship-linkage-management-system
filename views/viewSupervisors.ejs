@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supervisors — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div><h1>Supervisors</h1><p>Assigned supervisors for accepted interns</p></div>
+  <a href="/supervisors/add" class="btn btn-primary">+ Assign Supervisor</a>
+</div>
+
+<div class="table-wrap">
+  <% if (supervisors.length === 0) { %>
+    <div class="empty-state"><div class="empty-icon">👤</div><p>No accepted applications with supervisors yet.</p></div>
+  <% } else { %>
+  <table>
+    <thead><tr><th>Student</th><th>Internship</th><th>University Supervisor</th><th>Company Supervisor</th><th>Actions</th></tr></thead>
+    <tbody>
+      <% supervisors.forEach(row => { %>
+      <tr>
+        <td><strong><%= row.student_name %></strong></td>
+        <td><%= row.internship_title %></td>
+        <td>
+          <% if (row.uni_supervisor) { %>
+            <div style="font-weight:600"><%= row.uni_supervisor %></div>
+            <div style="font-size:0.78rem;color:var(--muted)"><%= row.uni_email %></div>
+            <% if (row.uni_phone) { %><div style="font-size:0.78rem;color:var(--muted)"><%= row.uni_phone %></div><% } %>
+          <% } else { %>
+            <a href="/supervisors/assign/<%= row.application_id %>" class="btn btn-primary btn-sm">Assign →</a>
+          <% } %>
+        </td>
+        <td>
+          <% if (row.company_supervisor) { %>
+            <div style="font-weight:600"><%= row.company_supervisor %></div>
+            <div style="font-size:0.78rem;color:var(--muted)"><%= row.co_email %></div>
+            <% if (row.co_phone) { %><div style="font-size:0.78rem;color:var(--muted)"><%= row.co_phone %></div><% } %>
+            <% if (row.job_title) { %><div style="font-size:0.78rem;color:var(--muted)"><%= row.job_title %></div><% } %>
+          <% } else { %>
+            <% if (row.uni_supervisor) { %>
+              <a href="/supervisors/assign/<%= row.application_id %>/company" class="btn btn-primary btn-sm">Assign →</a>
+            <% } else { %>
+              <span style="color:var(--muted);font-size:0.8rem">Assign uni first</span>
+            <% } %>
+          <% } %>
+        </td>
+        <td>
+          <a href="/supervisors/assign/<%= row.application_id %>" class="btn btn-ghost btn-sm">Edit</a>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

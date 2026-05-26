@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help Center — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body{margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4fa}
+    .pub-content{max-width:900px;margin:0 auto;padding:48px 32px}
+    .page-banner{background:linear-gradient(135deg,#0f1f3d,#1e3a6e);color:#fff;padding:48px 40px;border-radius:12px;margin-bottom:36px;text-align:center}
+    .page-banner h1{font-size:1.9rem;font-weight:800;margin-bottom:8px}
+    .page-banner p{color:rgba(255,255,255,0.7)}
+    .search-box{background:#fff;border-radius:10px;border:1px solid #e2e8f0;padding:20px 24px;margin-bottom:32px;display:flex;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+    .search-box input{flex:1;padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:0.9rem}
+    .faq-section{margin-bottom:40px}
+    .faq-section h2{font-size:1.1rem;font-weight:700;color:#0f1f3d;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+    .faq-item{background:#fff;border-radius:10px;border:1px solid #e2e8f0;margin-bottom:10px;overflow:hidden}
+    .faq-q{padding:16px 20px;font-weight:600;font-size:0.875rem;color:#0f1f3d;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+    .faq-q:hover{background:#f8fafc}
+    .faq-a{padding:0 20px 14px;font-size:0.85rem;color:#475569;line-height:1.7;display:none}
+    .faq-item.open .faq-a{display:block}
+    .faq-item.open .arr{transform:rotate(180deg)}
+    .arr{transition:transform 0.2s;font-size:0.7rem;color:#94a3b8}
+    .support-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:40px}
+    .support-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+    .support-card .icon{font-size:2rem;margin-bottom:12px}
+    .support-card h3{font-size:0.9rem;font-weight:700;color:#0f1f3d;margin-bottom:6px}
+    .support-card p{font-size:0.8rem;color:#64748b;margin-bottom:14px}
+    @media(max-width:600px){.support-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<%- include('partials/nav') %>
+<div class="pub-content">
+  <div class="page-banner">
+    <h1>❓ Help Center</h1>
+    <p>Find answers to common questions and get support</p>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="faqSearch" placeholder="Search for answers..." oninput="filterFaq(this.value)">
+    <button class="btn btn-primary">Search</button>
+  </div>
+
+  <div class="support-grid">
+    <div class="support-card"><div class="icon">💬</div><h3>Complaint System</h3><p>Submit a complaint about your evaluation or internship experience.</p><a href="/portal/complaints" class="btn btn-primary btn-sm">Submit Complaint</a></div>
+    <div class="support-card"><div class="icon">📧</div><h3>Email Support</h3><p>Send us an email and we'll respond within 24 hours.</p><a href="mailto:support@internlink.et" class="btn btn-ghost btn-sm">Email Us</a></div>
+    <div class="support-card"><div class="icon">📞</div><h3>Phone Support</h3><p>Call us Monday–Friday, 8 AM – 5 PM EAT.</p><a href="tel:+251111234567" class="btn btn-ghost btn-sm">+251 11 123 4567</a></div>
+  </div>
+
+  <div id="faq" class="faq-section">
+    <h2>Getting Started</h2>
+    <div class="faq-item open"><div class="faq-q" onclick="toggleFaq(this)">How do I create a student account? <span class="arr">▼</span></div><div class="faq-a">Visit <a href="/portal/register">/portal/register</a>, select your student profile from the dropdown, and set a password. Your account will be created instantly.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">I forgot my password. What do I do? <span class="arr">▼</span></div><div class="faq-a">Contact your university administrator or email us at support@internlink.et to reset your password.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">My name is not in the registration list. What should I do? <span class="arr">▼</span></div><div class="faq-a">Your student profile must be added by your university administrator first. Contact your university's internship coordinator to get registered in the system.</div></div>
+  </div>
+
+  <div class="faq-section">
+    <h2>Applications</h2>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I apply for an internship? <span class="arr">▼</span></div><div class="faq-a">Log in to your Student Portal, go to "Apply for Internship", select an internship from the list, and click Submit. Your application is sent immediately.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I apply for multiple internships? <span class="arr">▼</span></div><div class="faq-a">Yes, you can apply for multiple internships. However, you can only apply once per internship.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How long does it take to hear back? <span class="arr">▼</span></div><div class="faq-a">Response times vary by company. You can track your application status in real-time on your dashboard. You'll also receive an email notification when your status changes.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What does "Pending" status mean? <span class="arr">▼</span></div><div class="faq-a">Pending means your application has been received and is awaiting review by the administrator. No action is needed from your side.</div></div>
+  </div>
+
+  <div class="faq-section">
+    <h2>Evaluations & Complaints</h2>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How are evaluations conducted? <span class="arr">▼</span></div><div class="faq-a">Your company supervisor submits an evaluation covering technical skills, communication, teamwork, and overall performance on a 1–5 scale.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">I disagree with my evaluation. How do I complain? <span class="arr">▼</span></div><div class="faq-a">Log in to your Student Portal and go to "Complaints". Submit a complaint linked to your application and the admin will review and respond.</div></div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
+
+<script>
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+function filterFaq(val) {
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const text = item.textContent.toLowerCase();
+    item.style.display = text.includes(val.toLowerCase()) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

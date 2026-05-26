@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaints — InternLink Admin</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('../partials/header') %>
+
+<div class="page-header">
+  <div><h1>Complaints</h1><p>Student complaints and messages</p></div>
+</div>
+
+<% if (complaints.length === 0) { %>
+  <div class="table-wrap">
+    <div class="empty-state"><div class="empty-icon">💬</div><p>No complaints submitted yet.</p></div>
+  </div>
+<% } else { %>
+  <% complaints.forEach(c => { %>
+  <div class="card card-body" style="margin-bottom:16px;max-width:800px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+      <div>
+        <strong style="font-size:1rem;color:var(--navy);"><%= c.subject %></strong>
+        <div style="font-size:0.8rem;color:var(--muted);margin-top:3px;">
+          👤 <%= c.student_name %>
+          <% if (c.internship_title) { %> &nbsp;·&nbsp; 📋 <%= c.internship_title %><% } %>
+          &nbsp;·&nbsp; 🕐 <%= new Date(c.created_at).toLocaleDateString() %>
+        </div>
+      </div>
+      <span class="badge badge-<%= c.status === 'Resolved' ? 'accepted' : 'pending' %>"><%= c.status %></span>
+    </div>
+    <p style="font-size:0.875rem;color:var(--text);line-height:1.6;margin-bottom:16px;"><%= c.message %></p>
+    <% if (c.admin_reply) { %>
+      <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:0.875rem;">
+        <div style="font-size:0.75rem;font-weight:700;color:var(--accent);margin-bottom:4px;">Your Reply</div>
+        <%= c.admin_reply %>
+      </div>
+    <% } %>
+    <form action="/complaints/<%= c.complaint_id %>/reply" method="POST" style="display:flex;flex-direction:column;gap:10px;">
+      <div class="form-group" style="margin-bottom:0;">
+        <label>Reply to Student</label>
+        <textarea name="admin_reply" rows="3" placeholder="Type your reply..."><%= c.admin_reply || '' %></textarea>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <select name="status" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.875rem;">
+          <option value="Open" <%= c.status === 'Open' ? 'selected' : '' %>>Open</option>
+          <option value="Resolved" <%= c.status === 'Resolved' ? 'selected' : '' %>>Resolved</option>
+        </select>
+        <button type="submit" class="btn btn-primary btn-sm">Save Reply</button>
+      </div>
+    </form>
+  </div>
+  <% }) %>
+<% } %>
+
+<%- include('../partials/footer') %>
+</body>
+</html>

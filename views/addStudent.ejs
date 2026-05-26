@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Student — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div><h1>Add Student</h1><p>Register a new student</p></div>
+  <a href="/students" class="btn btn-ghost">← Back</a>
+</div>
+
+<div class="form-card">
+  <div class="form-card-header"><h2>Student Details</h2></div>
+  <div class="form-card-body">
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-error">⚠️ <%= error %></div>
+    <% } %>
+    <form action="/students/add" method="POST">
+      <div class="form-group">
+        <label>First Name</label>
+        <input name="first_name" placeholder="First name" required
+          value="<%= typeof first_name !== 'undefined' ? first_name : '' %>">
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input name="last_name" placeholder="Last name" required
+          value="<%= typeof last_name !== 'undefined' ? last_name : '' %>">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input name="email" type="email" placeholder="student@university.edu.et" required
+          value="<%= typeof email !== 'undefined' ? email : '' %>">
+      </div>
+      <div class="form-group">
+        <label>Department</label>
+        <input name="department" placeholder="e.g. Computer Science" required
+          value="<%= typeof department !== 'undefined' ? department : '' %>">
+      </div>
+      <div class="form-group">
+        <label>Year of Study</label>
+        <input name="year_of_study" type="number" min="1" max="6" placeholder="e.g. 3" required
+          value="<%= typeof year_of_study !== 'undefined' ? year_of_study : '' %>">
+      </div>
+      <div class="form-group">
+        <label>University</label>
+        <select name="university_id" required>
+          <option value="">— Select University —</option>
+          <% universities.forEach(u => { %>
+            <option value="<%= u.university_id %>"
+              <%= (typeof university_id !== 'undefined' && university_id == u.university_id) ? 'selected' : '' %>>
+              <%= u.university_name %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Add Student</button>
+        <a href="/students" class="btn btn-ghost">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

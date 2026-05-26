@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partner Universities — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body{margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4fa}
+    .pub-content{max-width:1100px;margin:0 auto;padding:48px 32px}
+    .page-banner{background:linear-gradient(135deg,#0f1f3d,#1e3a6e);color:#fff;padding:48px 40px;border-radius:12px;margin-bottom:36px}
+    .page-banner h1{font-size:1.9rem;font-weight:800;margin-bottom:8px}
+    .page-banner p{color:rgba(255,255,255,0.7)}
+    .uni-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+    .uni-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+    .uni-card h3{font-size:1rem;font-weight:700;color:#0f1f3d;margin-bottom:6px}
+    .uni-card p{font-size:0.82rem;color:#64748b;margin-bottom:4px}
+    .uni-badge{display:inline-block;background:#dbeafe;color:#1e40af;font-size:0.75rem;font-weight:600;padding:3px 10px;border-radius:20px;margin-top:10px}
+  </style>
+</head>
+<body>
+<%- include('partials/nav') %>
+<div class="pub-content">
+  <div class="page-banner">
+    <h1>🏫 Partner Universities</h1>
+    <p><%= universities.length %> universities connected to InternLink</p>
+  </div>
+  <% if (universities.length === 0) { %>
+    <div style="text-align:center;padding:60px;color:#64748b;">No universities registered yet.</div>
+  <% } else { %>
+  <div class="uni-grid">
+    <% universities.forEach(u => { %>
+    <div class="uni-card">
+      <h3><%= u.university_name %></h3>
+      <p>📍 <%= u.location %></p>
+      <p>📧 <%= u.contact_email %></p>
+      <div class="uni-badge">👥 <%= u.student_count %> students</div>
+    </div>
+    <% }) %>
+  </div>
+  <% } %>
+</div>
+<%- include('partials/footer') %>
+</body>
+</html>

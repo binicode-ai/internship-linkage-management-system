@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assign Supervisor — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div><h1>Assign Supervisor</h1><p>Assign university and company supervisors to accepted interns</p></div>
+  <a href="/supervisors" class="btn btn-ghost">← Back</a>
+</div>
+
+<% if (typeof error !== 'undefined' && error) { %>
+  <div class="alert alert-error" style="max-width:600px;margin-bottom:20px;">⚠️ <%= error %></div>
+<% } %>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;">
+
+  <div class="form-card">
+    <div class="form-card-header"><h2>🏫 University Supervisor</h2></div>
+    <div class="form-card-body">
+      <form action="/supervisors/university/add" method="POST">
+        <div class="form-group">
+          <label>Application</label>
+          <select name="application_id" required>
+            <option value="">— Select Accepted Application —</option>
+            <% acceptedApplications.forEach(a => { %>
+              <option value="<%= a.application_id %>"><%= a.student_name %> — <%= a.internship_title %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" name="full_name" placeholder="Supervisor full name" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="supervisor@university.edu.et" required>
+        </div>
+        <div class="form-group">
+          <label>University</label>
+          <select name="university_id" required>
+            <option value="">— Select University —</option>
+            <% universities.forEach(u => { %>
+              <option value="<%= u.university_id %>"><%= u.university_name %></option>
+            <% }) %>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Assign</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <div class="form-card-header"><h2>🏢 Company Supervisor</h2></div>
+    <div class="form-card-body">
+      <form action="/supervisors/company/add" method="POST">
+        <div class="form-group">
+          <label>Application</label>
+          <select name="application_id" required>
+            <option value="">— Select Accepted Application —</option>
+            <% acceptedApplications.forEach(a => { %>
+              <option value="<%= a.application_id %>"><%= a.student_name %> — <%= a.internship_title %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" name="full_name" placeholder="Supervisor full name" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="supervisor@company.com" required>
+        </div>
+        <div class="form-group">
+          <label>Job Title</label>
+          <input type="text" name="job_title" placeholder="e.g. Senior Engineer" required>
+        </div>
+        <div class="form-group">
+          <label>Company</label>
+          <select name="company_id" required>
+            <option value="">— Select Company —</option>
+            <% companies.forEach(c => { %>
+              <option value="<%= c.company_id %>"><%= c.company_name %></option>
+            <% }) %>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Assign</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

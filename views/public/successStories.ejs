@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Success Stories — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body{margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4fa}
+    .pub-content{max-width:1100px;margin:0 auto;padding:48px 32px}
+    .page-banner{background:linear-gradient(135deg,#0f1f3d,#1e3a6e);color:#fff;padding:56px 40px;border-radius:12px;margin-bottom:36px;text-align:center}
+    .page-banner h1{font-size:1.9rem;font-weight:800;margin-bottom:8px}
+    .page-banner p{color:rgba(255,255,255,0.7)}
+    .stories-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;margin-bottom:48px}
+    .story-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+    .story-card .quote{font-size:0.9rem;color:#475569;line-height:1.7;margin-bottom:20px;font-style:italic;position:relative;padding-left:16px;border-left:3px solid #4f8ef7}
+    .story-card .author{display:flex;align-items:center;gap:14px}
+    .avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:1.1rem;flex-shrink:0}
+    .author-info .name{font-weight:700;font-size:0.9rem;color:#0f1f3d}
+    .author-info .role{font-size:0.78rem;color:#64748b}
+    .author-info .company{font-size:0.78rem;color:#4f8ef7;font-weight:600}
+    .stars{color:#f59e0b;font-size:0.9rem;margin-bottom:12px}
+    .outcome-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;margin-bottom:48px}
+    .outcome-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+    .outcome-card .num{font-size:2rem;font-weight:800;color:#0f1f3d}
+    .outcome-card .lbl{font-size:0.8rem;color:#64748b;margin-top:4px}
+    .section-title{font-size:1.3rem;font-weight:700;color:#0f1f3d;margin-bottom:24px}
+  </style>
+</head>
+<body>
+<%- include('partials/nav') %>
+<div class="pub-content">
+  <div class="page-banner">
+    <h1>⭐ Success Stories</h1>
+    <p>Real stories from students and companies who transformed their careers through InternLink</p>
+  </div>
+
+  <div class="section-title">Graduate Outcomes</div>
+  <div class="outcome-grid">
+    <div class="outcome-card"><div class="num">94%</div><div class="lbl">Internship Completion Rate</div></div>
+    <div class="outcome-card"><div class="num">78%</div><div class="lbl">Received Job Offers</div></div>
+    <div class="outcome-card"><div class="num">4.6/5</div><div class="lbl">Average Evaluation Score</div></div>
+    <div class="outcome-card"><div class="num">200+</div><div class="lbl">Successful Placements</div></div>
+  </div>
+
+  <div class="section-title">Student Testimonials</div>
+  <div class="stories-grid">
+    <div class="story-card">
+      <div class="stars">★★★★★</div>
+      <div class="quote">"InternLink completely changed my career trajectory. I found an internship at a top tech company and received a full-time offer after graduation. The platform made the entire process effortless."</div>
+      <div class="author"><div class="avatar" style="background:linear-gradient(135deg,#4f8ef7,#2563eb)">AB</div><div class="author-info"><div class="name">Abebe Bekele</div><div class="role">Software Engineering, AAU</div><div class="company">Placed at: Ethio Telecom</div></div></div>
+    </div>
+    <div class="story-card">
+      <div class="stars">★★★★★</div>
+      <div class="quote">"The real-time status tracking was incredibly helpful. I always knew where my application stood, and the email notification when I was accepted was such a great moment!"</div>
+      <div class="author"><div class="avatar" style="background:linear-gradient(135deg,#10b981,#059669)">ST</div><div class="author-info"><div class="name">Sara Tesfaye</div><div class="role">Business Administration, ASTU</div><div class="company">Placed at: Commercial Bank of Ethiopia</div></div></div>
+    </div>
+    <div class="story-card">
+      <div class="stars">★★★★★</div>
+      <div class="quote">"As an engineering student, finding relevant internships was always challenging. InternLink connected me with exactly the right company and the experience was invaluable."</div>
+      <div class="author"><div class="avatar" style="background:linear-gradient(135deg,#f59e0b,#d97706)">DM</div><div class="author-info"><div class="name">Dawit Mengistu</div><div class="role">Electrical Engineering, JU</div><div class="company">Placed at: Ethiopian Electric Power</div></div></div>
+    </div>
+  </div>
+
+  <div class="section-title">Company Feedback</div>
+  <div class="stories-grid">
+    <div class="story-card">
+      <div class="stars">★★★★★</div>
+      <div class="quote">"The quality of interns we've received through InternLink has been exceptional. The structured evaluation system helps us provide meaningful feedback and identify top talent."</div>
+      <div class="author"><div class="avatar" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed)">ET</div><div class="author-info"><div class="name">Ethio Telecom</div><div class="role">HR Department</div><div class="company">Partner since 2024</div></div></div>
+    </div>
+    <div class="story-card">
+      <div class="stars">★★★★★</div>
+      <div class="quote">"InternLink streamlined our entire internship program. We can now manage applications, assign supervisors, and track evaluations all in one place. Highly recommended."</div>
+      <div class="author"><div class="avatar" style="background:linear-gradient(135deg,#ef4444,#dc2626)">CB</div><div class="author-info"><div class="name">Commercial Bank of Ethiopia</div><div class="role">Talent Acquisition</div><div class="company">Partner since 2024</div></div></div>
+    </div>
+    <div class="story-card">
+      <div class="stars">★★★★★</div>
+      <div class="quote">"The platform's supervisor assignment feature is brilliant. Both our company supervisors and university coordinators can collaborate seamlessly on student progress."</div>
+      <div class="author"><div class="avatar" style="background:linear-gradient(135deg,#06b6d4,#0891b2)">EP</div><div class="author-info"><div class="name">Ethiopian Electric Power</div><div class="role">Engineering Division</div><div class="company">Partner since 2025</div></div></div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:16px;">
+    <a href="/portal/register" class="btn btn-primary" style="padding:12px 28px;font-size:1rem;">Join InternLink Today</a>
+  </div>
+</div>
+<%- include('partials/footer') %>
+</body>
+</html>

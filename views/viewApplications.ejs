@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applications — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div><h1>Applications</h1><p>Student internship applications</p></div>
+  <a href="/applications/add" class="btn btn-primary">+ New Application</a>
+</div>
+
+<div class="table-wrap">
+  <div class="table-toolbar">
+    <form action="/applications" method="GET" class="filter-bar">
+      <label style="font-size:0.8rem;font-weight:600;color:var(--muted);">Filter:</label>
+      <select name="status">
+        <option value="" <%= filter === '' ? 'selected' : '' %>>All Statuses</option>
+        <option value="Pending"  <%= filter === 'Pending'  ? 'selected' : '' %>>Pending</option>
+        <option value="Accepted" <%= filter === 'Accepted' ? 'selected' : '' %>>Accepted</option>
+        <option value="Rejected" <%= filter === 'Rejected' ? 'selected' : '' %>>Rejected</option>
+      </select>
+      <button type="submit" class="btn btn-ghost btn-sm">Apply</button>
+      <a href="/applications" class="btn btn-ghost btn-sm">Clear</a>
+    </form>
+  </div>
+
+  <% if (applications.length === 0) { %>
+    <div class="empty-state"><div class="empty-icon">📋</div><p>No applications found.</p></div>
+  <% } else { %>
+  <table>
+    <thead><tr><th>Student</th><th>Internship</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>
+      <% applications.forEach(a => { %>
+      <tr>
+        <td><strong><%= a.first_name %> <%= a.last_name %></strong></td>
+        <td><%= a.internship_title %></td>
+        <td><%= a.application_date ? new Date(a.application_date).toISOString().slice(0,10) : '' %></td>
+        <td><span class="badge badge-<%= a.status.toLowerCase() %>"><%= a.status %></span></td>
+        <td style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <form action="/applications/<%= a.application_id %>/status" method="POST" style="display:flex;gap:6px;align-items:center;">
+            <select name="status" style="padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-size:0.8rem;">
+              <option value="Pending"  <%= a.status === 'Pending'  ? 'selected' : '' %>>Pending</option>
+              <option value="Accepted" <%= a.status === 'Accepted' ? 'selected' : '' %>>Accepted</option>
+              <option value="Rejected" <%= a.status === 'Rejected' ? 'selected' : '' %>>Rejected</option>
+            </select>
+            <button type="submit" class="btn btn-ghost btn-sm">Update</button>
+          </form>
+          <% if (a.status === 'Accepted') { %>
+            <a href="/supervisors/assign/<%= a.application_id %>" class="btn btn-primary btn-sm">👤 Assign Supervisors</a>
+            <a href="/recommendations/<%= a.application_id %>" class="btn btn-success btn-sm">📄 Letter</a>
+          <% } %>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

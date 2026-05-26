@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recommendation Letter — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .letter-wrap { max-width: 720px; margin: 0 auto; }
+    .letter-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: 48px 56px;
+      font-family: Georgia, 'Times New Roman', serif;
+      line-height: 1.8;
+    }
+    .letter-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--navy);
+    }
+    .letter-logo-icon { font-size: 2rem; }
+    .letter-logo-text { font-family: 'Segoe UI', sans-serif; }
+    .letter-logo-text strong { display: block; font-size: 1rem; color: var(--navy); }
+    .letter-logo-text span { font-size: 0.75rem; color: var(--muted); }
+    .letter-date { color: var(--muted); font-size: 0.875rem; margin-bottom: 24px; font-family: 'Segoe UI', sans-serif; }
+    .letter-body p { margin-bottom: 18px; color: var(--text); font-size: 0.95rem; }
+    .letter-details {
+      background: #f8fafc;
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 24px 0;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.875rem;
+    }
+    .letter-details p { margin-bottom: 6px; color: var(--text); }
+    .letter-details p:last-child { margin-bottom: 0; }
+    .letter-sig { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border); font-family: 'Segoe UI', sans-serif; }
+    .letter-sig strong { display: block; color: var(--navy); }
+    .letter-sig span { font-size: 0.8rem; color: var(--muted); }
+    @media print {
+      .sidebar, .topbar, .page-header, .print-actions, .site-footer { display: none !important; }
+      .main-wrap { margin-left: 0 !important; }
+      .page-content { padding: 0 !important; }
+      .letter-card { box-shadow: none; border: none; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div><h1>Recommendation Letter</h1><p>Official internship placement letter</p></div>
+  <div class="print-actions" style="display:flex;gap:10px;">
+    <button onclick="window.print()" class="btn btn-primary">🖨️ Print</button>
+    <a href="/applications" class="btn btn-ghost">← Back</a>
+  </div>
+</div>
+
+<div class="letter-wrap">
+  <div class="letter-card">
+    <div class="letter-logo">
+      <div class="letter-logo-icon">🎓</div>
+      <div class="letter-logo-text">
+        <strong>InternLink — Internship &amp; Industry Linkage</strong>
+        <span>Official Recommendation Letter</span>
+      </div>
+    </div>
+
+    <div class="letter-date">Date: <%= new Date().toLocaleDateString('en-ET', { year:'numeric', month:'long', day:'numeric' }) %></div>
+
+    <div class="letter-body">
+      <p>To Whom It May Concern,</p>
+
+      <p>
+        This letter serves as an official recommendation confirming that
+        <strong><%= letter.student_name %></strong>, a student at
+        <strong><%= letter.university_name %></strong>, has been formally accepted
+        for an internship placement through the InternLink platform.
+      </p>
+
+      <div class="letter-details">
+        <p><strong>Internship Title:</strong> <%= letter.internship_title %></p>
+        <p><strong>Host Company:</strong> <%= letter.company_name %></p>
+        <p><strong>Start Date:</strong> <%= letter.start_date ? new Date(letter.start_date).toISOString().slice(0,10) : 'N/A' %></p>
+        <p><strong>Duration:</strong> <%= letter.duration_months %> month<%= letter.duration_months === 1 ? '' : 's' %></p>
+      </div>
+
+      <p>
+        We fully endorse this placement and kindly request all relevant parties to extend
+        their full cooperation and support to the intern throughout the duration of the programme.
+      </p>
+
+      <p>
+        This letter is generated and authenticated by the Internship &amp; Industry Linkage
+        Management System of Ethiopia.
+      </p>
+    </div>
+
+    <div class="letter-sig">
+      <strong>InternLink Administration</strong>
+      <span>Internship &amp; Industry Linkage Management System</span>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Assign University Supervisor — InternLink</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<%- include('../partials/header') %>
+
+<!-- Progress indicator -->
+<div style="background:#fff;border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;gap:0;max-width:600px;margin-bottom:28px">
+  <div style="display:flex;align-items:center;gap:8px">
+    <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem">1</div>
+    <span style="font-size:0.875rem;font-weight:700;color:var(--accent)">University Supervisor</span>
+  </div>
+  <div style="flex:1;height:2px;background:var(--border);margin:0 12px"></div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <div style="width:32px;height:32px;border-radius:50%;background:var(--border);color:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem">2</div>
+    <span style="font-size:0.875rem;color:var(--muted)">Company Supervisor</span>
+  </div>
+</div>
+
+<div class="page-header">
+  <div>
+    <h1>Step 1: Assign University Supervisor</h1>
+    <p>
+      <strong><%= application.student_name %></strong> — <%= application.internship_title %>
+      &nbsp;·&nbsp; University: <strong><%= application.university_name %></strong>
+    </p>
+  </div>
+  <a href="/supervisors" class="btn btn-ghost">← Cancel</a>
+</div>
+
+<% if (error) { %>
+  <div class="alert alert-error" style="max-width:520px;margin-bottom:20px">⚠️ <%= error %></div>
+<% } %>
+
+<% if (existing) { %>
+  <div class="alert alert-success" style="max-width:520px;margin-bottom:20px;background:#dcfce7;border:1px solid #bbf7d0;color:#166534;padding:12px 16px;border-radius:8px;font-size:0.875rem">
+    ✅ University supervisor already assigned: <strong><%= existing.full_name %></strong>. You can update below or <a href="/supervisors/assign/<%= application.application_id %>/company" style="color:#166534;font-weight:700">skip to Step 2 →</a>
+  </div>
+<% } %>
+
+<div class="form-card" style="max-width:520px">
+  <div class="form-card-header"><h2>🏫 University Supervisor Details</h2></div>
+  <div class="form-card-body">
+    <form action="/supervisors/assign/<%= application.application_id %>/university" method="POST">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" name="full_name" placeholder="Dr. Almaz Tadesse" required value="<%= existing ? existing.full_name : '' %>">
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="supervisor@university.edu.et" required value="<%= existing ? existing.email : '' %>">
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" name="phone_number" placeholder="+251 9XX XXX XXX" value="<%= existing && existing.phone_number ? existing.phone_number : '' %>">
+      </div>
+      <div class="form-group">
+        <label>University</label>
+        <select name="university_id" required>
+          <option value="">— Select University —</option>
+          <% universities.forEach(u => { %>
+            <option value="<%= u.university_id %>" <%= (existing && existing.university_id == u.university_id) || (!existing && application.university_id == u.university_id) ? 'selected' : '' %>>
+              <%= u.university_name %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save & Continue to Step 2 →</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+</body>
+</html>

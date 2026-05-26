@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%- title %> — InternLink</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body { margin:0; font-family:'Segoe UI',system-ui,sans-serif; background:#f0f4fa; }
+    .pub-nav { background:var(--navy); padding:0 40px; display:flex; align-items:center; justify-content:space-between; height:64px; position:sticky; top:0; z-index:100; }
+    .pub-nav .brand { color:#fff; font-weight:800; font-size:1.1rem; text-decoration:none; }
+    .pub-nav .nav-links { display:flex; gap:8px; align-items:center; }
+    .pub-nav .nav-links a { color:rgba(255,255,255,0.75); text-decoration:none; padding:8px 14px; border-radius:6px; font-size:0.875rem; font-weight:500; transition:all 0.15s; }
+    .pub-nav .nav-links a:hover { color:#fff; background:rgba(255,255,255,0.1); }
+    .pub-nav .nav-links a.cta { background:var(--accent); color:#fff; }
+    .pub-nav .nav-links a.cta:hover { background:var(--accent2); }
+    .pub-content { max-width:1100px; margin:0 auto; padding:40px 24px; }
+    .pub-footer { background:var(--navy); color:rgba(255,255,255,0.5); text-align:center; padding:24px; font-size:0.8rem; margin-top:60px; }
+  </style>
+</head>
+<body>
+<nav class="pub-nav">
+  <a href="/public" class="brand">🎓 InternLink</a>
+  <div class="nav-links">
+    <a href="/public">Home</a>
+    <a href="/public/internships">Internships</a>
+    <a href="/public/companies">Companies</a>
+    <a href="/portal/login" class="cta">Student Portal</a>
+  </div>
+</nav>
+<div class="pub-content">
+  <%- body %>
+</div>
+<footer class="pub-footer">&copy; 2026 InternLink — Internship &amp; Industry Linkage Management System, Ethiopia</footer>
+</body>
+</html>

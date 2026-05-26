@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Dashboard — InternLink Portal</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0f172a;--accent:#3b82f6;--accent2:#2563eb;--green:#10b981;--yellow:#f59e0b;--red:#ef4444;--purple:#8b5cf6;--bg:#f8fafc}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--navy);display:flex;flex-direction:column;min-height:100vh}
+/* Sidebar */
+.portal-layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--navy);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;transition:transform 0.3s}
+.sidebar-brand{padding:24px 20px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.sidebar-brand .name{color:#fff;font-weight:800;font-size:1rem}
+.sidebar-brand .sub{color:rgba(255,255,255,0.4);font-size:0.72rem;margin-top:2px}
+.sidebar-nav{flex:1;padding:16px 0;overflow-y:auto}
+.nav-section{font-size:0.65rem;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.08em;padding:12px 20px 4px}
+.sidebar-nav a{display:flex;align-items:center;gap:10px;padding:10px 20px;color:rgba(255,255,255,0.65);text-decoration:none;font-size:0.875rem;font-weight:500;border-left:3px solid transparent;transition:all 0.15s}
+.sidebar-nav a:hover,.sidebar-nav a.active{color:#fff;background:rgba(59,130,246,0.15);border-left-color:var(--accent)}
+.sidebar-nav a .ni{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
+.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.08)}
+.sidebar-footer a{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.4);text-decoration:none;font-size:0.8rem;transition:color 0.15s}
+.sidebar-footer a:hover{color:#fff}
+/* Main */
+.main-wrap{margin-left:240px;flex:1;display:flex;flex-direction:column}
+.topbar{background:#fff;border-bottom:1px solid #e2e8f0;padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-title{font-size:0.95rem;font-weight:600;color:var(--navy)}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.user-chip{display:flex;align-items:center;gap:8px;background:#f1f5f9;border-radius:20px;padding:6px 14px 6px 6px}
+.user-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.75rem;font-weight:700}
+.user-name{font-size:0.82rem;font-weight:600;color:var(--navy)}
+.page-content{padding:32px;flex:1}
+/* Welcome banner */
+.welcome-banner{background:linear-gradient(135deg,var(--navy),#1e1b4b);border-radius:16px;padding:32px 36px;color:#fff;margin-bottom:28px;display:flex;justify-content:space-between;align-items:center;position:relative;overflow:hidden}
+.welcome-banner::before{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(59,130,246,0.1)}
+.welcome-banner h2{font-size:1.4rem;font-weight:800;margin-bottom:6px}
+.welcome-banner p{color:rgba(255,255,255,0.65);font-size:0.875rem}
+.welcome-emoji{font-size:3.5rem;opacity:0.8;position:relative;z-index:1}
+/* KPI cards */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.kpi{background:#fff;border-radius:14px;padding:20px 22px;border:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,0.05);transition:all 0.2s;position:relative;overflow:hidden}
+.kpi:hover{box-shadow:0 8px 24px rgba(59,130,246,0.12);transform:translateY(-2px)}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kpi.blue::before{background:linear-gradient(90deg,var(--accent),var(--purple))}
+.kpi.green::before{background:linear-gradient(90deg,var(--green),#06b6d4)}
+.kpi.yellow::before{background:linear-gradient(90deg,var(--yellow),#f97316)}
+.kpi.red::before{background:linear-gradient(90deg,var(--red),#ec4899)}
+.kpi .lbl{font-size:0.72rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px}
+.kpi .val{font-size:2rem;font-weight:800;color:var(--navy);line-height:1}
+.kpi .sub{font-size:0.75rem;color:#94a3b8;margin-top:4px}
+/* Table */
+.table-card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,0.05);overflow:hidden}
+.table-header{padding:18px 22px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between}
+.table-header h2{font-size:0.95rem;font-weight:700;color:var(--navy)}
+table{width:100%;border-collapse:collapse;font-size:0.875rem}
+thead th{background:#f8fafc;color:#64748b;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:12px 18px;text-align:left;border-bottom:1px solid #e2e8f0}
+tbody td{padding:14px 18px;border-bottom:1px solid #f1f5f9;color:var(--navy);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr{transition:background 0.15s}
+tbody tr:hover{background:#f8fafc}
+/* Status badges */
+.badge-pending{background:#fef9c3;color:#92400e;padding:4px 10px;border-radius:20px;font-size:0.75rem;font-weight:600}
+.badge-accepted{background:#dcfce7;color:#166534;padding:4px 10px;border-radius:20px;font-size:0.75rem;font-weight:600}
+.badge-rejected{background:#fee2e2;color:#991b1b;padding:4px 10px;border-radius:20px;font-size:0.75rem;font-weight:600}
+/* Progress bar */
+.progress-wrap{margin-bottom:6px}
+.progress-label{display:flex;justify-content:space-between;font-size:0.75rem;color:#64748b;margin-bottom:4px}
+.progress-bar{height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;transition:width 1s ease;width:0}
+/* Empty state */
+.empty-state{text-align:center;padding:60px 20px;color:#94a3b8}
+.empty-state .ei{font-size:3rem;margin-bottom:12px}
+.empty-state p{font-size:0.9rem}
+/* Responsive */
+@media(max-width:768px){.sidebar{transform:translateX(-100%)}.main-wrap{margin-left:0}.kpi-row{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="portal-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="name">🎓 InternLink</div>
+      <div class="sub">Student Portal</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Main</div>
+      <a href="/portal" class="active"><span class="ni">🏠</span> Dashboard</a>
+      <a href="/portal/apply"><span class="ni">💼</span> Apply</a>
+      <a href="/portal/complaints"><span class="ni">💬</span> Complaints</a>
+      <div class="nav-section">Explore</div>
+      <a href="/public/internships" target="_blank"><span class="ni">🔍</span> Browse Internships</a>
+      <a href="/public" target="_blank"><span class="ni">🌐</span> Public Site</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/portal/logout">🚪 Sign Out</a>
+    </div>
+  </aside>
+
+  <div class="main-wrap">
+    <header class="topbar">
+      <span class="topbar-title">Student Dashboard</span>
+      <div class="topbar-right">
+        <div class="user-chip">
+          <div class="user-avatar"><%= studentName.charAt(0) %></div>
+          <span class="user-name"><%= studentName %></span>
+        </div>
+        <a href="/portal/logout" style="font-size:0.8rem;color:#64748b;text-decoration:none">Sign Out</a>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <div class="welcome-banner">
+        <div>
+          <h2>Welcome back, <%= studentName.split(' ')[0] %>! 👋</h2>
+          <p>Track your internship applications and manage your profile.</p>
+        </div>
+        <div class="welcome-emoji">🎓</div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpi-row">
+        <div class="kpi blue"><div class="lbl">Total Applications</div><div class="val"><%= applications.length %></div><div class="sub">Submitted</div></div>
+        <div class="kpi green"><div class="lbl">Accepted</div><div class="val" style="color:var(--green)"><%= applications.filter(a=>a.status==='Accepted').length %></div><div class="sub">Placements</div></div>
+        <div class="kpi yellow"><div class="lbl">Pending</div><div class="val" style="color:var(--yellow)"><%= applications.filter(a=>a.status==='Pending').length %></div><div class="sub">Awaiting review</div></div>
+        <div class="kpi red"><div class="lbl">Rejected</div><div class="val" style="color:var(--red)"><%= applications.filter(a=>a.status==='Rejected').length %></div><div class="sub">Not accepted</div></div>
+      </div>
+
+      <!-- Progress bars -->
+      <% if (applications.length > 0) { %>
+      <div style="background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:22px 24px;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,0.05)">
+        <div style="font-size:0.9rem;font-weight:700;color:var(--navy);margin-bottom:16px">Application Progress</div>
+        <% var acc=applications.filter(a=>a.status==='Accepted').length; var pend=applications.filter(a=>a.status==='Pending').length; var rej=applications.filter(a=>a.status==='Rejected').length; var total=applications.length; %>
+        <div class="progress-wrap"><div class="progress-label"><span>Accepted</span><span><%= acc %>/<%= total %></span></div><div class="progress-bar"><div class="progress-fill" style="background:linear-gradient(90deg,var(--green),#06b6d4)" data-width="<%= Math.round(acc/total*100) %>"></div></div></div>
+        <div class="progress-wrap"><div class="progress-label"><span>Pending</span><span><%= pend %>/<%= total %></span></div><div class="progress-bar"><div class="progress-fill" style="background:linear-gradient(90deg,var(--yellow),#f97316)" data-width="<%= Math.round(pend/total*100) %>"></div></div></div>
+        <div class="progress-wrap"><div class="progress-label"><span>Rejected</span><span><%= rej %>/<%= total %></span></div><div class="progress-bar"><div class="progress-fill" style="background:linear-gradient(90deg,var(--red),#ec4899)" data-width="<%= Math.round(rej/total*100) %>"></div></div></div>
+      </div>
+      <% } %>
+
+      <!-- Applications table -->
+      <div class="table-card">
+        <div class="table-header">
+          <h2>My Applications</h2>
+          <a href="/portal/apply" class="btn btn-primary btn-sm">+ Apply Now</a>
+        </div>
+        <% if (applications.length === 0) { %>
+          <div class="empty-state"><div class="ei">📋</div><p>No applications yet. <a href="/portal/apply" style="color:var(--accent)">Apply for an internship</a>.</p></div>
+        <% } else { %>
+        <table>
+          <thead><tr><th>Internship</th><th>Company</th><th>Location</th><th>Duration</th><th>Applied</th><th>Status</th><th>Supervisors</th></tr></thead>
+          <tbody>
+            <% applications.forEach(a => { %>
+            <tr>
+              <td><strong><%= a.internship_title %></strong></td>
+              <td><%= a.company_name %></td>
+              <td><%= a.company_location || '—' %></td>
+              <td><%= a.duration_months %> mo</td>
+              <td><%= a.application_date ? new Date(a.application_date).toISOString().slice(0,10) : '' %></td>
+              <td><span class="badge-<%= a.status.toLowerCase() %>"><%= a.status %></span></td>
+              <td style="font-size:0.78rem;color:var(--muted)">
+                <% if (a.uni_supervisor) { %><div>🏫 <%= a.uni_supervisor %><% if(a.uni_supervisor_email){%> · <%= a.uni_supervisor_email %><% } %></div><% } %>
+                <% if (a.company_supervisor) { %><div>🏢 <%= a.company_supervisor %><% if(a.company_supervisor_title){%> · <%= a.company_supervisor_title %><% } %></div><% } %>
+                <% if (!a.uni_supervisor && !a.company_supervisor) { %>—<% } %>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } %>
+      </div>
+
+      <!-- Evaluations -->
+      <% if (evaluations && evaluations.length > 0) { %>
+      <div class="table-card" style="margin-top:24px">
+        <div class="table-header"><h2>My Evaluations</h2></div>
+        <table>
+          <thead><tr><th>Internship</th><th>Company</th><th>Technical</th><th>Communication</th><th>Teamwork</th><th>Overall</th><th>Average</th><th>Comments</th></tr></thead>
+          <tbody>
+            <% evaluations.forEach(e => { %>
+            <tr>
+              <td><strong><%= e.internship_title %></strong></td>
+              <td><%= e.company_name %></td>
+              <td><%= e.technical_skills %>/5</td>
+              <td><%= e.communication %>/5</td>
+              <td><%= e.teamwork %>/5</td>
+              <td><%= e.overall_score %>/5</td>
+              <td><strong style="color:var(--accent)"><%= e.average_score %></strong></td>
+              <td style="font-size:0.82rem;color:var(--muted);max-width:200px"><%= e.comments || '—' %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+    </main>
+  </div>
+</div>
+
+<script>
+// Animate progress bars
+setTimeout(function(){
+  document.querySelectorAll('.progress-fill').forEach(function(el){
+    el.style.width = (el.dataset.width || 0) + '%';
+  });
+}, 300);
+</script>
+</body>
+</html>
